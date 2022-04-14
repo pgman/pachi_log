@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pachi-Prob</title>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width:100%;
+  height:100%;
+  /*overflow: hidden;*/
+}
+* {	
+  font-size: 24px;
+}
+#trial_number {
+  width: 80px;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.1.1/math.min.js"></script>
+<script>
+$(() => {
+	var initVal = '1/99.9';
+
+	$('#prob-select').val(initVal);
+	changeProb(1);
+
+	$('#prob-select').change(e => { changeProb(1); });
+
+	$('#x1, #xhalf, #xquarter').click(e => {
+		let times;
+		if(e.target.id === 'x1') {
+			times = 1;
+		} else if(e.target.id === 'xhalf') {
+			times = 0.5;
+		} else {
+			times = 0.25;
+		}
+		changeProb(times);
+	});
+
+	$('#calc').click(() => {
+	 	const p = eval($('#prob-select').val());
+	 	const n = parseInt($('#trial_number').val());
+	 	const g = 1;
+
+	 	if(isNaN(n)) {
+	 		alert('input is invalid.')
+	 		return;
+	 	}
+
+  		let gp;
+	    let mgp = 0.0;
+	    for(let i = 1; i <= g - 1; i++) {
+	      mgp += math.combinations(n, i) * Math.pow(p, i) * Math.pow(1 - p, n - i); 
+	    }
+	    gp = 1 - Math.pow((1 - p), n) - mgp;
+		gp *= 100;
+		$('#probability').text(gp.toFixed(5) + '%');  
+	});
+
+	function changeProb(times) {
+		let n = 1 / eval($('#prob-select').val());
+		n *= times;
+		n = Math.round(n);
+		$('#trial_number').val(n);
+	}
+});
+
+</script>
+</head>
+<body>  
+<div id="main-page">
+確率: 
+<select id="prob-select">
+	<option>1/99.9</option>
+	<option>1/129.5</option>
+	<option>1/199.9</option>
+	<option>1/222.9</option>
+	<option>1/319.68</option>
+</select>
+<br>
+試行回数: <input id="trial_number" type="text" value="100" />回
+<button id="x1">x1</button>&nbsp;
+<button id="xhalf">x0.5</button>&nbsp;
+<button id="xquarter">x0.25</button>&nbsp;
+<br>
+<input id="calc" type="button" value="確率を計算"><br><br>
+<div id="probability"></div>
+</div>
+</body>
+</html>

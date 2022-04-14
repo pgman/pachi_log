@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pachi-Log</title>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width:100%;
+  height:100%;
+  /*overflow: hidden;*/
+}
+* {	
+  font-size: 24px;
+}
+#data-table {
+    border-collapse: collapse;
+}
+#data-table th, #data-table td {
+	border: 1px solid #888;
+	text-align: center;
+	padding: 3px;
+}
+
+#detail-table {
+    border-collapse: collapse;
+}
+#detail-table th, #detail-table td {
+	border: 1px solid #888;
+	text-align: center;
+	padding: 3px;
+}
+#number-text, #ball-text, #time-text, #search-number-text, #detail-ball-text, #detail-time-text {
+	width: 100px;
+}
+.plus-button {
+	background-color: lightblue;
+}
+.minus-button {
+	background-color: orangered;
+}
+#img-layer {
+	display: none;
+	background-color: #888;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    opacity: 0.5;
+}
+#img {
+	display: none;
+	position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+}
+#detail-game-memo-text {
+	width: 600px;
+	height: 100px;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(() => {
+	/*
+	TODO
+	 */
+	const 
+	_KEY = 'PachiLogKey',
+	_SHOPS = [
+		{
+			id: 'osakahalltenma',
+			name: '大阪ホール天満店',
+			info: '無し',
+		},
+		{
+			id: 'osakahalltengo',
+			name: '大阪ホール天五店',
+			info: '無し',
+		},
+		{
+			id: 'daitoyohigashidori',
+			name: '大東洋東通店',
+			info: '無し',
+		},
+		{
+			id: 'daitoyoumeda',
+			name: '大東洋梅田店',
+			info: '無し',
+		},
+		{
+			id: 'kyobashikaikan',
+			name: '京橋会館',
+			info: '無し',
+		},
+		{
+			id: 'kyobashikaikan',
+			name: 'グランシャトー',
+			info: '無し',
+		},
+		{
+			id: 'n123osakahonten',
+			name: 'N123大阪本店',
+			info: '無し',
+		},
+		{
+			id: 'maruhanumeda',
+			name: 'マルハン梅田店',
+			info: '無し',
+		},		
+	],
+	_GAMES = [	
+		{
+			id: 'psakura199',
+			shortName: 'P桜199',
+			name: 'Pスーパー海物語IN沖縄5 桜ver.（199ver.）',
+			border: 18.5,
+			info: '大当り確率: 1/199.8, ST突入率: 100%, ST継続率: 約75.1%, <br>ボーダー:17.8',
+			yuTime: false,
+		},	
+		{
+			id: 'crringama',
+			shortName: 'CRリング甘',
+			name: 'CRリング 運命の日FPWZ',
+			border: 18.5,
+			info: '大当り確率: 1/99.902, ST突入率: 100%, ST継続率: 70%, <br>技術介入により14-15までボーダーは下がる',
+			yuTime: false,
+		},
+		{
+			id: 'wanwan',
+			shortName: 'Pわんパラ',
+			name: 'PAわんわんパラダイスV',
+			border: 16.8,
+			info: '大当り確率: 1/99.9, ST突入率: 42%, ST継続率: 80%, <br>15回回れば、天井まで200で期待値プラス',
+			yuTime: true,
+		},
+		{
+			id: 'eurekaama',
+			shortName: 'PAエウレカ甘',
+			name: 'デジハネPA交響詩篇エウレカセブン HIｰEVOLUTION ZERO',
+			border: 17.1,
+			info: '大当り確率: 1/99.9',
+			yuTime: true,
+		},
+		{
+			id: 'koumonnama',
+			shortName: 'P黄門ちゃま甘',
+			name: 'P真・黄門ちゃま 甘デジ',
+			border: 18.0,
+			info: '大当り確率: 1/99.9→1/59.5, 時短50回, ST100回',
+			yuTime: true,
+		},
+		{
+			id: 'akb',
+			shortName: 'P AKB甘',
+			name: 'ぱちんこ AKB48 桜 LIGHT ver.',
+			border: 17.0,
+			info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 93%',
+			yuTime: true,
+		},
+		{
+			id: 'huyusonaama',
+			shortName: 'P 冬ソナ甘',
+			name: 'Pぱちんこ 冬のソナタ Remember Sweet Version',
+			border: 21.2,
+			info: '大当り確率: 1/99.9, ST突入率: 58%, ST継続率: 60%, <br>STにもれたら時短30回',
+			yuTime: false,
+		},
+		{
+			id: 'goonlight',
+			shortName: 'Pライダー甘',
+			name: 'ぱちんこ仮面ライダー GO-ON LIGHT',
+			border: 15.4,
+			info: '大当り確率: 1/99.9',
+			yuTime: true,
+		},
+		{
+			id: 'momokyunlight',
+			shortName: 'Pモモキュン甘',
+			name: 'PモモキュンソードGC250A',
+			border: 16.5,
+			info: '大当り確率: 1/89.9, 戦RUSH突入率: 45%',
+			yuTime: true,
+		},
+		{
+			id: 'otome6',
+			shortName: 'P乙女6',
+			name: 'P戦国乙女6 暁の関ヶ原',
+			border: 18.0,
+			info: '大当り確率: 1/222.9, 戦RUSH突入率: 50%',
+			yuTime: true,
+		},
+		{
+			id: 'patrushgreen',
+			shortName: 'PパトラッシュV GREEN',
+			name: 'PパトラッシュV GREEN',
+			border: 18.9,
+			info: '大当り確率: 1/199.8, RUSH突入率: 55%, RUSH継続率: 91%',
+			yuTime: true,
+		},
+		{
+			id: 'otome6ama',
+			shortName: 'P乙女6甘',
+			name: 'P戦国乙女6 暁の関ヶ原 甘デジ',
+			border: 17.9,
+			info: '大当り確率: 1/99.9, 戦RUSH突入率: 44.5%',
+			yuTime: true,
+		},
+		{
+			id: 'genidatenlight',
+			shortName: 'P源さんLIGHT',
+			name: 'P大工の源さん超韋駄天LIGHT',
+			border: 20.0,
+			info: '大当り確率: 1/129.51, 超源RUSH突入率: 50.1%',
+			yuTime: false,
+		},
+		{
+			id: 'genidaten',
+			shortName: 'P源さん318',
+			name: 'P大工の源さん超韋駄天',
+			border: 20.0,
+			info: '大当り確率: 1/318.13, 超源RUSH突入率: 60.2%',
+			yuTime: false,
+		},
+		{
+			id: 'garupan',
+			shortName: 'Pガルパン',
+			name: 'Pガールズ＆パンツァー 劇場版',
+			border: 17.6,
+			info: '大当り確率: 1/199.8, 戦車道突入率: 54%',
+			yuTime: true,
+		},
+		{
+			id: 'aria',
+			shortName: 'Pアリア',
+			name: 'P緋弾のアリア 緋弾覚醒編',
+			border: 19.2,
+			info: '大当り確率: 1/199.1, 強襲任務突入率: 50%',
+			yuTime: true,
+		},
+		{
+			id: 'ginpara199',
+			shortName: 'Pギンパラ199',
+			name: 'Pギンギラパラダイス 夢幻カーニバル 199ver.',
+			border: 19.3,
+			info: '大当り確率: 1/199.8, Rush突入率: 50%, Rush継続率: 80%',
+			yuTime: true,
+		},
+		{
+			id: 'vivid',
+			shortName: 'Pビビッド',
+			name: 'Pビビッドレッドオペレーション',
+			border: 17.7,
+			info: '大当り確率: 1/219.91, ST直突入率: 50%, <br>時短中の当たり確率: 36%, ST継続率: 75%',
+			yuTime: true,
+		},
+		{
+			id: 'soutentenkoku',
+			shortName: 'P蒼天',
+			name: 'P蒼天の拳 天刻',
+			border: 17.1,
+			info: '大当り確率: 1/199.8, ST突入率: 54%, ST継続率: 83%',
+			yuTime: true,
+		},
+		{
+			id: 'sympho2',
+			shortName: 'Pシンフォ2',
+			name: 'Pフィーバー戦姫絶唱シンフォギア2',
+			border: 18.4,
+			info: '大当り確率: 1/199.8, ST突入率: 51%, ST継続率: 82%',
+			yuTime: true,
+		},
+		{
+			id: 'toaru',
+			shortName: 'Pとある',
+			name: 'Pとある魔術の禁書目録',
+			border: 17.4,
+			info: '大当り確率: 1/319.68, ST突入率: 100%, 最大ST継続率: 79%',
+			yuTime: true,
+		},		
+		{
+			id: 'kyozin',
+			shortName: 'P巨人の星',
+			name: 'P巨人の星 一球入魂3000',
+			border: 18.5,
+			info: '大当り確率: 1/319.68, ST突入率: 55%, 最大ST継続率: 77%',
+			yuTime: true,
+		},		
+		{
+			id: 'jaws3',
+			shortName: 'P JAWS3',
+			name: 'P JAWS3 SHARK PANIC～深淵～',
+			border: 17.9,
+			info: '大当り確率: 1/319.6, ST突入率: 51%, ST継続率: 80%',
+			yuTime: true,
+		},
+		{
+			id: 'tarou2',
+			shortName: 'P タロウ2',
+			name: 'ぱちんこ ウルトラマンタロウ2',
+			border: 18.7,
+			info: '大当り確率: 1/319.9, ST突入率: 50%, ST継続率: 81%',
+			yuTime: true,
+		},
+		{
+			id: 'garogekkou',
+			shortName: 'P 牙狼月虹',
+			name: 'P牙狼月虹ノ旅人',
+			border: 18.1,
+			info: '大当り確率: 1/319.68, ST突入率: 50%, ST継続率: 81%',
+			yuTime: true,
+		},
+		{
+			id: 'hokuto8',
+			shortName: 'P北斗8',
+			name: 'P北斗の拳8 救世主',
+			border: 17.7,
+			info: '大当り確率: 1/319.7, ST突入率: 50.2%, ST継続率: 84%',
+			yuTime: true,
+		},
+		{
+			id: 'hokutomuso3',
+			shortName: '北斗無双3',
+			name: 'P真・北斗無双 第3章',
+			border: 18.9,
+			info: '大当り確率: 1/319.7, ST突入率: 56.9%, ST継続率: 90%',
+			yuTime: true,
+		},
+		{
+			id: 'hokutomuso',
+			shortName: 'CR北斗無双',
+			name: 'ぱちんこCR真･北斗無双',
+			border: 17.9,
+			info: '大当り確率: 1/319.7, ST突入率(ヘソ入賞時): 50%, ST継続率: 80%',
+			yuTime: false,
+		},
+		{
+			id: 'keizishikkoku',
+			shortName: '慶次漆黒',
+			name: 'CR真・花の慶次2 漆黒の衝撃',
+			border: 18.3,
+			info: '大当り確率: 1/319.7, ST突入率(ヘソ入賞時): 55%, ST継続率: 65%',
+			yuTime: false,
+		},
+		{
+			id: 'verselk',
+			shortName: 'ベルセルク',
+			name: 'Pベルセルク無双',
+			border: 17.7,
+			info: '大当り確率: 1/319.7, ST突入率: 75%, ST継続率: 75%',
+			yuTime: false,
+		},
+		{
+			id: 'umi',
+			shortName: 'P 海系',
+			name: '海系',
+			border: 20.0,
+			info: 'メモを書き込んでください',
+			yuTime: false,
+		},
+		{
+			id: 'else',
+			shortName: 'P else',
+			name: '他',
+			border: 20.0,
+			info: 'メモを書き込んでください',
+			yuTime: false,
+		},
+	];
+
+	let 
+	_data = [],
+	_inputShopId = 'osakahalltenma',
+	_inputGameId = 'wanwan',
+	_inputGameNumber, _inputBall, _inputTime,
+	_selectedDataIndex;
+
+	function init() {
+		$('#main-page').show();
+		$('#detail-page').hide();
+		loadData();
+		attachEvents();
+		initDate();
+		initShopSelect();
+		initGameSelect();
+		updateList();
+	}
+
+	function replaceAll(expression, org, dest){
+    	return expression.split(org).join(dest);
+	}
+
+	function initDate() {
+		$('#date-input, #search-date-input').val(replaceAll(formatDate(new Date()), '/', '-'));
+	}
+
+	function initShopSelect() {
+		const html = _SHOPS.reduce((p, c) => p + `<option value=${c.id}>${c.name}</option>`, '');
+		$('#shop-select').html(html);
+		const searchHtml = `<option value="all">--</option>` + html;
+		$('#search-shop-select').html(searchHtml);
+	}
+
+	function initGameSelect() {
+		const html = _GAMES.reduce((p, c) => p + `<option value=${c.id}>${c.name}</option>`, '');
+		$('#game-select').html(html);
+	}
+
+	function getShopById(id) {
+		return _SHOPS.find(s => s.id === id);
+	}
+
+	function getGameById(id) {
+		return _GAMES.find(g => g.id === id);
+	}
+
+	// 日付をYYYY-MM-DDの書式で返すメソッド
+	function formatDate(dt) {
+	  var y = dt.getFullYear();
+	  var m = ('00' + (dt.getMonth()+1)).slice(-2);
+	  var d = ('00' + dt.getDate()).slice(-2);
+	  return (y + '/' + m + '/' + d);
+	}
+
+	function updateList() {
+		$('#shop-select').val(_inputShopId);
+		$('#game-select').val(_inputGameId);
+
+		const shop = getShopById(_inputShopId);
+		$('#shop-info-span').html(shop.info);
+
+		const game = getGameById(_inputGameId);
+		$('#game-border-span').html(game.border);
+		$('#game-info-span').html(game.info);	
+
+		if(game.yuTime) {
+			$('#show-yu-time-info-button').show();
+		} else {
+			$('#show-yu-time-info-button').hide();
+		}
+
+		// リストを描画する
+		let timeCount = 0, ballCount = 0;
+		let html = '';
+		for(let i = _data.length - 1; i >= 0; i -= 1) {
+			const c = _data[i];
+			const shop = getShopById(c.shopId);
+			const game = getGameById(c.gameId);
+
+			// 検索条件を満たすか調べる
+			const searchDate = replaceAll($('#search-date-input').val(), '-', '/');
+			if(searchDate && c.date !== searchDate) {
+				continue;
+			}
+			const searchShopId = $('#search-shop-select').val();
+			if(searchShopId !== 'all' && c.shopId !== searchShopId) {
+				continue;
+			}
+
+			const searchNumber = parseInt($('#search-number-text').val());
+
+			if(!isNaN(searchNumber) && c.gameNumber !== searchNumber) {
+				continue;
+			}
+			
+			html += `<tr id="tr-${i}">`;
+			html += `<td>${c.date}</td>`;
+			html += `<td>${shop.name}</td>`;
+			html += `<td>${c.gameNumber}</td>`;
+			html += `<td>${game.shortName}</td>`;
+			let time = 0;
+			if(c.details.length) {
+				const last = c.details[c.details.length - 1];
+				time = last.time - c.time;
+			}
+			html += `<td>${time}</td>`;
+			html += `<td>${game.border}</td>`;
+			let tps = 0;
+			if(c.details.length) {
+				const last = c.details[c.details.length - 1];
+				tps = 250 * (last.time - c.time) / (c.ball - last.ball); 
+				timeCount += last.time - c.time;
+				ballCount += c.ball - last.ball;
+			}
+			html += `<td>${tps === 0 ? '--' : tps.toFixed(1)}</td>`;
+			html += `<td><button class="edit-data">編集</button></td>`;
+			html += `<td><button class="delete-data">削除</button></td>`;
+			html += `</tr>`;
+		}
+
+		$('#data-body').html(html);
+
+		if(ballCount !== 0) {
+			const atps = 250 * timeCount / ballCount; 
+			$('#rotation-speed-span').text(atps.toFixed(1));
+			$('#rotation-count-span').text(timeCount);
+		} else {
+			$('#rotation-speed-span, #rotation-count-span').text('--');
+		}
+	}
+
+	function updateDetail() {
+		const _selected = _data[_selectedDataIndex];
+		const shop = getShopById(_selected.shopId);
+		const game = getGameById(_selected.gameId);
+
+		$('#detail-date-span').html(_selected.date);
+		$('#detail-shop-span').html(shop.name);
+		$('#detail-number-span').html(_selected.gameNumber);
+		$('#detail-game-span').html(game.name);
+		$('#detail-game-border-span').html(game.border);
+		$('#detail-game-info-span').html(game.info);
+		$('#detail-game-memo-text').val(_selected.memo);
+
+		let html = '';
+
+		html += `<tr>`;
+		html += `<td>${_selected.ball}</td>`;
+		html += `<td>${_selected.time}</td>`;
+		html += `<td>${game.border}</td>`;
+		html += `<td>--</td>`;
+		html += `<td>--</td>`;
+		html += `</tr>`;
+
+		// リストを描画する
+		_selected.details.reverse();
+		let detailHtml = _selected.details.reduce((p, c) => {
+			let html = '';
+			html += `<tr>`;
+			html += `<td>${c.ball}</td>`;
+			html += `<td>${c.time}</td>`;
+			html += `<td>${game.border}</td>`;
+			const tps = 250 * (c.time - _selected.time) / (_selected.ball - c.ball); 
+			html += `<td>${tps.toFixed(1)}</td>`;
+			html += `<td><button class="delete-detail-data">削除</button></td>`;
+			html += `</tr>`;
+			return p + html;
+		}, '');
+		_selected.details.reverse();
+
+		html += detailHtml;
+
+		$('#detail-body').html(html);
+	}
+
+	function attachEvents() {
+
+		// ダブルタップでブラウザが拡大するのを防ぐ
+		document.addEventListener("dblclick", e => { 
+			e.preventDefault(); }, { passive: false });
+
+		$('#to-main-button').click(e => {
+			$('#main-page').show();
+		    $('#detail-page').hide();
+			updateList();
+		});
+		$('#shop-select').change(e => {
+			_inputShopId = $('#shop-select').val();
+			updateList();
+		});
+
+		$('#game-select').change(e => {
+			_inputGameId = $('#game-select').val();
+			updateList();
+		});		
+
+		$('#search-date-clear-button').click(e => {
+			$('#search-date-input').val('');
+			updateList();
+		});
+
+		$('#search-date-input, #search-shop-select').change(updateList);
+
+		$('#search-button').click(updateList);
+
+		$('#search-number-text').blur(updateList);
+
+		$('#search-number-clear-button').click(e => {
+			$('#search-number-text').val('');
+			updateList();
+		});
+
+		$('body').on('click', '.edit-data', e => {
+			_selectedDataIndex = parseInt($(e.target).parent().parent().prop('id').substring(3), 10);
+		    $('#main-page').hide();
+		    $('#detail-page').show();
+		    const selectedData = _data[_selectedDataIndex];
+		    if(!selectedData.details.length) {
+		    	$('#detail-ball-text').val(selectedData.ball);
+		    	$('#detail-time-text').val(selectedData.time);
+		    } else {
+		    	const lastDetail = selectedData.details[selectedData.details.length - 1];
+		    	$('#detail-ball-text').val(lastDetail.ball);
+		    	$('#detail-time-text').val(lastDetail.time);
+		    }
+		    updateDetail();
+		});
+
+		$('body').on('click', '.delete-data', e => {
+			const index = parseInt($(e.target).parent().parent().prop('id').substring(3), 10);
+		    if(confirm('削除しますか？')) {
+		    	_data.splice(index, 1);
+		    	saveData();
+				updateList();
+		    }
+		});
+
+		$('body').on('click', '.delete-detail-data', e => {
+			let index = $('#detail-body tr').index($(e.target).parent().parent());
+			index--;
+			index = _data[_selectedDataIndex].details.length - 1 - index;
+			const selectedData = _data[_selectedDataIndex];
+			const detail = selectedData.details[index];
+		    if(confirm(`削除しますか？\n\n玉数: ${detail.ball}\n回転数${detail.time}\n`)) {
+				selectedData.details.splice(index, 1);
+		    	saveData();
+				updateDetail();
+		    }
+		});
+
+		$('#show-yu-time-info-button').click(e => {
+			const game = getGameById(_inputGameId);
+			showImgDialog(game.id + '.png');
+		});
+
+		$('#img-layer').click(e => {
+			$('#img-layer, #img').hide();
+		});
+
+		$('#detail-ball-add-125, #detail-ball-add-250, #detail-ball-minus-125, #detail-ball-minus-250').click(e => {
+			const val = e.target.id.split('-');
+			const num = parseInt(val[val.length - 1], 10);
+			if(isNaN(num)) {
+				return;
+			}
+			const curNum = parseInt($('#detail-ball-text').val(), 10);
+			if(isNaN(curNum)) {
+				return;
+			}
+			let newNum;
+			if(e.target.id.indexOf('add') >= 0) {
+				newNum = curNum + num;
+			} else {
+				newNum = curNum - num;
+			}
+			$('#detail-ball-text').val(newNum);
+		});
+
+		$('#detail-time-add-1, #detail-time-add-10, #detail-time-minus-1, #detail-time-minus-10').click(e => {
+			const val = e.target.id.split('-');
+			const num = parseInt(val[val.length - 1], 10);
+			if(isNaN(num)) {
+				return;
+			}
+			const curNum = parseInt($('#detail-time-text').val(), 10);
+			if(isNaN(curNum)) {
+				return;
+			}
+			let newNum;
+			if(e.target.id.indexOf('add') >= 0) {
+				newNum = curNum + num;
+			} else {
+				newNum = curNum - num;
+			}
+			$('#detail-time-text').val(newNum);
+		});
+
+		// 登録ボタン押下
+		$('#regist-game-button').click(e => {
+			_inputGameNumber = parseInt($('#number-text').val());
+			_inputBall = parseInt($('#ball-text').val());
+			_inputTime = parseInt($('#time-text').val());
+
+			if(isNaN(_inputGameNumber) || isNaN(_inputBall) || isNaN(_inputTime)) {
+				alert('入力が不正です');
+				return;
+			}
+
+			const shop = getShopById(_inputShopId);
+			const game = getGameById(_inputGameId);
+
+			confirm(`登録しますか？\n\n日付: ${replaceAll($('#date-input').val(), '-', '/')}\n店舗: ${shop.name}\n台番号: ${_inputGameNumber}\n機種(略称): ${game.shortName}\n玉数: ${_inputBall}\n回転数: ${_inputTime}`);
+
+			// 登録処理
+			_data.push({
+				date: replaceAll($('#date-input').val(), '-', '/'),
+				shopId: _inputShopId,
+				gameId: _inputGameId,
+				gameNumber: _inputGameNumber,
+				ball: _inputBall,
+				time: _inputTime,
+				details: [],
+			});
+
+			saveData();
+			updateList();
+		});
+
+		// メモ登録
+		$('#regist-detail-memo-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+
+			selectedData.memo = $('#detail-game-memo-text').val();
+
+			saveData();
+			updateDetail();
+		});
+
+		// 回転数登録
+		$('#regist-detail-button').click(e => {
+			const detailBall = parseInt($('#detail-ball-text').val());
+			const detailTime = parseInt($('#detail-time-text').val());
+
+			if(isNaN(detailBall) || isNaN(detailTime)) {
+				alert('入力が不正です');
+				return;
+			}
+
+			const selectedData = _data[_selectedDataIndex];
+
+			selectedData.details.push({
+				ball: detailBall,
+				time: detailTime,
+			});
+
+			saveData();
+			updateDetail();
+		});		
+	}
+
+	// 画像ダイアログを表示
+	function showImgDialog(path) {
+		$('#img').attr({ src: path });
+		$('#img-layer, #img').show();
+	}
+
+	// データを保存
+	function saveData() {
+		const json = JSON.stringify(_data);
+		localStorage.setItem(_KEY, json);
+	}
+
+	// データをロード
+	function loadData() {
+		json = localStorage.getItem(_KEY);
+		if(json) {
+			_data = JSON.parse(json);
+		} else {
+			_data = [];
+		}
+		_data.forEach(d => {
+			if(typeof(d.memo) === 'undefined') {
+				d.memo = '';
+			}
+		});
+	}
+
+	init();
+    
+});     
+</script>
+</head>
+<body>  
+<div id="main-page">
+	<div id="regist-game-div">
+		<fieldset>
+			<legend>台登録</legend>
+			<table>
+				<thead></thead>
+				<tbody>
+					<tr><td width="20%">日付</td><td width="80%"><input type="date" id="date-input"></td></tr>
+					<tr><td>店舗</td><td><select id="shop-select"></select></td></tr>
+					<tr><td>店舗情報</td><td><span id="shop-info-span"></span></td></tr>
+					<tr><td>台番号</td><td><input type="text" id="number-text"></td></tr>
+					<tr><td>機種</td><td><select id="game-select"></select></td></tr>
+					<tr><td>ボーダー</td><td><span id="game-border-span"></span></td></tr>
+					<tr><td>機種情報</td><td><span id="game-info-span"></span></td></tr>
+					<tr><td>玉数</td><td><input type="text" id="ball-text"></td></td></tr>
+					<tr><td>回転数</td><td><input type="text" id="time-text"></td></td></tr>
+				</tbody>
+			</table>
+			<br>
+			<button id="regist-game-button">台登録</button>
+			&nbsp;
+			<button id="show-yu-time-info-button">遊タイム情報</button>
+		</fieldset>
+	</div>
+	<br>
+	<div id="search-div">
+		<fieldset>
+			<legend>検索条件</legend>
+			<table>
+				<thead></thead>
+				<tbody>
+					<tr><td>日付</td><td><input type="date" id="search-date-input">&nbsp;<input type="button" id="search-date-clear-button" value="クリア"></td></tr>
+					<tr><td>店舗</td><td><select id="search-shop-select"></select></td></tr>
+					<tr><td>台番号</td><td><input type="text" id="search-number-text">&nbsp;<input type="button" id="search-number-clear-button" value="クリア">&nbsp;<input type="button" id="search-button" value="検索"></td></tr>
+					<tr><td>回転数</td><td><span id="rotation-count-span"></span></td></tr>
+					<tr><td>回転率</td><td><span id="rotation-speed-span"></span></td></tr>
+				</tbody>
+			</table>			
+		</fieldset>
+	</div>
+	<br>
+	<div id="game-list-div">
+		<table id="data-table">
+			<thead>
+				<tr><th>日付</th><th>店舗</th><th>台番号</th><th>機種(略称)</th><th>回転数</th><th>ボーダー</th><th>回転率</th><th>編集</th><th>削除</th></tr>
+			</thead>
+			<tbody id="data-body">
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="detail-page">
+	<button id="to-main-button">メインページへ戻る</button><br><br>
+	<div id="detail-div">
+		<fieldset>
+			<legend>台詳細</legend>
+			<table>
+				<thead></thead>
+				<tbody>
+					<tr><td width="20%">日付</td><td width="80%"><span id="detail-date-span"></span></td></tr>
+					<tr><td>店舗</td><td><span id="detail-shop-span"></span></td></tr>
+					<tr><td>台番号</td><td><span id="detail-number-span"></span></td></tr>
+					<tr><td>機種</td><td><span id="detail-game-span"></span></td></tr>
+					<tr><td>ボーダー</td><td><span id="detail-game-border-span"></span></td></tr>
+					<tr><td>機種情報</td><td><span id="detail-game-info-span"></span></td></tr>
+				</tbody>
+			</table>
+		</fieldset>
+	</div>
+	<br>
+	<div id="detail-memo-div">
+		<fieldset>
+			<legend>メモ登録</legend>
+			<table>
+				<thead></thead>
+				<tbody>					
+					<tr><td>メモ</td><td><textarea id="detail-game-memo-text"></textarea></td></tr>
+				</tbody>
+			</table>
+			<br>
+			<button id="regist-detail-memo-button">メモ登録</button>
+		</fieldset>
+	</div>
+	<br>
+	<div id="regist-div">
+		<fieldset>
+			<legend>回転数登録</legend>
+			<table>
+				<thead></thead>
+				<tbody>
+					<tr>
+						<td>玉数</td>
+						<td><input type="text" id="detail-ball-text"></td>
+						<td><input type="button" id="detail-ball-add-125" class="plus-button" value="+125"></td>
+						<td><input type="button" id="detail-ball-add-250" class="plus-button" value="+250"></td>
+						<td><input type="button" id="detail-ball-minus-125" class="minus-button" value="-125"></td>
+						<td><input type="button" id="detail-ball-minus-250" class="minus-button" value="-250"></td>
+					</tr>
+					<tr>
+						<td>回転数</td>
+						<td><input type="text" id="detail-time-text"></td>
+						<td><input type="button" id="detail-time-add-1" class="plus-button" value="+1"></td>
+						<td><input type="button" id="detail-time-add-10" class="plus-button" value="+10"></td>
+						<td><input type="button" id="detail-time-minus-1" class="minus-button" value="-1"></td>
+						<td><input type="button" id="detail-time-minus-10" class="minus-button" value="-10"></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<button id="regist-detail-button">回転数登録</button>
+		</fieldset>
+	</div>
+	<br>
+	<div id="detail-list-div">
+		<table id="detail-table">
+			<thead>
+				<tr><th>玉数</th><th>回転数</th><th>ボーダー</th><th>回転率</th><th>削除</th></tr>
+			</thead>
+			<tbody id="detail-body">
+			</tbody>
+		</table>
+	</div>
+</div>
+<div id="img-layer"></div>
+<img id="img">
+</body>
+</html>
