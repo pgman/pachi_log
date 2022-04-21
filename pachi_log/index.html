@@ -390,7 +390,7 @@ $(() => {
 	let 
 	_data = [],
 	_inputShopId = 'osakahalltenma',
-	_inputGameId = 'psakura199',
+	_inputGameId = 'wanwan',
 	_inputGameNumber, _inputBall, _inputTime,
 	_selectedDataIndex;
 
@@ -525,7 +525,7 @@ $(() => {
 
 		$('#detail-date-span').html(_selected.date);
 		$('#detail-shop-span').html(shop.name);
-		$('#detail-number-span').html(_selected.gameNumber);
+		$('#detail-number-text').val(_selected.gameNumber);
 		$('#detail-game-span').html(game.name);
 		$('#detail-game-border-span').html(game.border);
 		$('#detail-game-info-span').html(game.info);
@@ -725,6 +725,18 @@ $(() => {
 			updateDetail();
 		});
 
+		$('#regist-detail-number-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+			if($('#detail-number-text').val() === '') {
+				alert('入力が不正です');
+				return;
+			}
+			selectedData.gameNumber = $('#detail-number-text').val();
+
+			saveData();
+			updateDetail();
+		});
+
 		// 回転数登録
 		$('#regist-detail-button').click(e => {
 			const detailBall = parseInt($('#detail-ball-text').val());
@@ -821,6 +833,18 @@ $(() => {
 		</fieldset>
 	</div>
 	<br>
+	<div id="">
+		<fieldset>
+			<legend>回転率</legend>
+			<table>
+				<thead>
+				<tr><th>店舗</th><th>台番号</th><th>機種(略称)</th><th>回転率</th><th>回転数</th></tr>
+				</thead>
+				<tbody></tbody>
+			</table>			
+		</fieldset>
+	</div>
+	<br>
 	<div id="game-list-div">
 		<table id="data-table">
 			<thead>
@@ -841,12 +865,13 @@ $(() => {
 				<tbody>
 					<tr><td width="20%">日付</td><td width="80%"><span id="detail-date-span"></span></td></tr>
 					<tr><td>店舗</td><td><span id="detail-shop-span"></span></td></tr>
-					<tr><td>台番号</td><td><span id="detail-number-span"></span></td></tr>
+					<tr><td>台番号</td><td><input type="text" id="detail-number-text"></td></tr>
 					<tr><td>機種</td><td><span id="detail-game-span"></span></td></tr>
 					<tr><td>ボーダー</td><td><span id="detail-game-border-span"></span></td></tr>
 					<tr><td>機種情報</td><td><span id="detail-game-info-span"></span></td></tr>
 				</tbody>
 			</table>
+			<button id="regist-detail-number-button">登録</button>
 		</fieldset>
 	</div>
 	<br>
