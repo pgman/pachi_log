@@ -14,19 +14,10 @@ html, body {
 * {	
   font-size: 24px;
 }
-#data-table {
+#data-table, #detail-table, #rotation-rate-table {
     border-collapse: collapse;
 }
-#data-table th, #data-table td {
-	border: 1px solid #888;
-	text-align: center;
-	padding: 3px;
-}
-
-#detail-table {
-    border-collapse: collapse;
-}
-#detail-table th, #detail-table td {
+#data-table th, #data-table td, #detail-table th, #detail-table td, #rotation-rate-table th, #rotation-rate-table td {
 	border: 1px solid #888;
 	text-align: center;
 	padding: 3px;
@@ -346,22 +337,6 @@ $(() => {
 			yuTime: true,
 		},
 		{
-			id: 'hokutomuso',
-			shortName: 'CR北斗無双',
-			name: 'ぱちんこCR真･北斗無双',
-			border: 17.9,
-			info: '大当り確率: 1/319.7, ST突入率(ヘソ入賞時): 50%, ST継続率: 80%',
-			yuTime: false,
-		},
-		{
-			id: 'keizishikkoku',
-			shortName: '慶次漆黒',
-			name: 'CR真・花の慶次2 漆黒の衝撃',
-			border: 18.3,
-			info: '大当り確率: 1/319.7, ST突入率(ヘソ入賞時): 55%, ST継続率: 65%',
-			yuTime: false,
-		},
-		{
 			id: 'verselk',
 			shortName: 'ベルセルク',
 			name: 'Pベルセルク無双',
@@ -516,6 +491,77 @@ $(() => {
 		} else {
 			$('#rotation-speed-span, #rotation-count-span').text('--');
 		}
+
+		// 回転率描画
+		const rList = [];
+
+		for(let i = 0; i < _data.length; i += 1) {
+			const c = _data[i];
+			const shop = getShopById(c.shopId);
+			const game = getGameById(c.gameId);
+
+			// 検索条件を満たすか調べる
+			const searchDate = replaceAll($('#search-date-input').val(), '-', '/');
+			if(searchDate && c.date !== searchDate) {
+				continue;
+			}
+			const searchShopId = $('#search-shop-select').val();
+			if(searchShopId !== 'all' && c.shopId !== searchShopId) {
+				continue;
+			}
+
+			const searchNumber = parseInt($('#search-number-text').val());
+
+			if(!isNaN(searchNumber) && c.gameNumber !== searchNumber) {
+				continue;
+			}
+
+			const index = rList.findIndex(r => {
+				if(r.date === c.date && r.shopId === c.shopId && r.gameId === c.gameId
+					&& r.gameNumber == c.gameNumber) {
+					return true;
+				} else {
+					return false;
+				}
+			});
+
+			let data;
+			if(index >= 0) {
+				data = rList[index];
+			} else {
+				data = {
+					date: c.date,
+					shopId: c.shopId,
+					shopName: shop.name,
+					gameId: c.gameId,
+					gameNumber: c.gameNumber,
+					gameName: game.shortName,
+					array: []
+				};
+				rList.push(data);
+			}
+			if(c.details.length) {
+				const last = c.details[c.details.length - 1];
+				data.array.push({
+					ball: c.ball - last.ball,
+					time: last.time - c.time
+				});
+			}
+		}
+		let rhtml = '';
+		rList.forEach(r => {
+			if(r.array.length === 0) { return; }
+			rhtml += '<tr>';
+			rhtml += `<td>${r.shopName}</td>`;
+			rhtml += `<td>${r.gameNumber}</td>`;
+			rhtml += `<td>${r.gameName}</td>`;
+			let ball = r.array.reduce((p, c) => p + c.ball, 0);
+			let time = r.array.reduce((p, c) => p + c.time, 0);
+			rhtml += `<td>${(250 * time / ball).toFixed(2)}</td>`;
+			rhtml += `<td>${time}</td>`;
+			rhtml += '</tr>';
+		});
+		$('#rotation-rate-tbody').html(rhtml);
 	}
 
 	function updateDetail() {
@@ -731,7 +777,7 @@ $(() => {
 				alert('入力が不正です');
 				return;
 			}
-			selectedData.gameNumber = $('#detail-number-text').val();
+			selectedData.gameNumber = parseInt($('#detail-number-text').val());
 
 			saveData();
 			updateDetail();
@@ -753,6 +799,8 @@ $(() => {
 				ball: detailBall,
 				time: detailTime,
 			});
+
+			$('#detail-ball-text').val(detailBall - 125)
 
 			saveData();
 			updateDetail();
@@ -782,6 +830,9 @@ $(() => {
 		_data.forEach(d => {
 			if(typeof(d.memo) === 'undefined') {
 				d.memo = '';
+			}
+			if(typeof(d.gameNumber) === 'string') {
+				d.gameNumber = Number(d.gameNumber);
 			}
 		});
 	}
@@ -836,11 +887,11 @@ $(() => {
 	<div id="">
 		<fieldset>
 			<legend>回転率</legend>
-			<table>
+			<table id="rotation-rate-table">
 				<thead>
 				<tr><th>店舗</th><th>台番号</th><th>機種(略称)</th><th>回転率</th><th>回転数</th></tr>
 				</thead>
-				<tbody></tbody>
+				<tbody id="rotation-rate-tbody"></tbody>
 			</table>			
 		</fieldset>
 	</div>
