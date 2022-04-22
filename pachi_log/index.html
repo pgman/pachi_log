@@ -390,7 +390,7 @@ $(() => {
 
 	function initShopSelect() {
 		const html = _SHOPS.reduce((p, c) => p + `<option value=${c.id}>${c.name}</option>`, '');
-		$('#shop-select').html(html);
+		$('#shop-select, #detail-shop-select').html(html);
 		const searchHtml = `<option value="all">--</option>` + html;
 		$('#search-shop-select').html(searchHtml);
 	}
@@ -574,7 +574,7 @@ $(() => {
 		const game = getGameById(_selected.gameId);
 
 		$('#detail-date-span').html(_selected.date);
-		$('#detail-shop-span').html(shop.name);
+		$('#detail-shop-id').val(_selected.shopId);
 		$('#detail-number-text').val(_selected.gameNumber);
 		$('#detail-game-span').html(game.name);
 		$('#detail-game-border-span').html(game.border);
@@ -783,6 +783,7 @@ $(() => {
 				alert('入力が不正です');
 				return;
 			}
+			selectedData.shopId = $('#detail-shop-select').val();
 			selectedData.gameNumber = parseInt($('#detail-number-text').val());
 
 			saveData();
@@ -923,7 +924,9 @@ $(() => {
 				<thead></thead>
 				<tbody>
 					<tr><td width="20%">日付</td><td width="80%"><span id="detail-date-span"></span></td></tr>
-					<tr><td>店舗</td><td><span id="detail-shop-span"></span></td></tr>
+					<tr><td>店舗</td><td>
+						<select id="detail-shop-select"></select>
+					</td></tr>
 					<tr><td>台番号</td><td><input type="text" id="detail-number-text"></td></tr>
 					<tr><td>機種</td><td><span id="detail-game-span"></span></td></tr>
 					<tr><td>ボーダー</td><td><span id="detail-game-border-span"></span></td></tr>
