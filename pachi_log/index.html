@@ -502,7 +502,9 @@ $(() => {
 
 			// 検索条件を満たすか調べる
 			const searchDate = replaceAll($('#search-date-input').val(), '-', '/');
-			if(searchDate && c.date !== searchDate) {
+			if($('#search-date-input').val() === '') {
+
+			} else if(searchDate && c.date !== searchDate) {
 				continue;
 			}
 			const searchShopId = $('#search-shop-select').val();
@@ -631,8 +633,8 @@ $(() => {
 
 		$('#search-date-clear-button').click(e => {
 			$('#search-date-input').val('');
-			alert($('#search-date-input').val() === '');
-			alert($('#search-date-input').val().length);
+			//alert($('#search-date-input').val() === '');
+			//alert($('#search-date-input').val().length);
 			updateList();
 		});
 
