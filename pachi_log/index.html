@@ -574,7 +574,7 @@ $(() => {
 		const game = getGameById(_selected.gameId);
 
 		$('#detail-date-span').html(_selected.date);
-		$('#detail-shop-id').val(_selected.shopId);
+		$('#detail-shop-select').val(_selected.shopId);
 		$('#detail-number-text').val(_selected.gameNumber);
 		$('#detail-game-span').html(game.name);
 		$('#detail-game-border-span').html(game.border);
