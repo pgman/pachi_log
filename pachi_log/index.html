@@ -631,7 +631,8 @@ $(() => {
 
 		$('#search-date-clear-button').click(e => {
 			$('#search-date-input').val('');
-			alert($('#search-date-input').val());
+			alert($('#search-date-input').val() === '');
+			alert($('#search-date-input').val().length);
 			updateList();
 		});
 
