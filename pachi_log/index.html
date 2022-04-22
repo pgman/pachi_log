@@ -63,15 +63,15 @@ $(() => {
 	_KEY = 'PachiLogKey',
 	_SHOPS = [
 		{
-			id: 'osakahalltenma',
-			name: '大阪ホール天満店',
-			info: '無し',
-		},
-		{
 			id: 'osakahalltengo',
 			name: '大阪ホール天五店',
 			info: '無し',
 		},
+		{
+			id: 'osakahalltenma',
+			name: '大阪ホール天満店',
+			info: '無し',
+		},		
 		{
 			id: 'daitoyohigashidori',
 			name: '大東洋東通店',
@@ -364,7 +364,7 @@ $(() => {
 
 	let 
 	_data = [],
-	_inputShopId = 'osakahalltenma',
+	_inputShopId = 'osakahalltengo',
 	_inputGameId = 'wanwan',
 	_inputGameNumber, _inputBall, _inputTime,
 	_selectedDataIndex;
@@ -631,6 +631,7 @@ $(() => {
 
 		$('#search-date-clear-button').click(e => {
 			$('#search-date-input').val('');
+			alert($('#search-date-input').val());
 			updateList();
 		});
 
