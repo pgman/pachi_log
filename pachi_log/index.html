@@ -53,7 +53,11 @@ html, body {
 	height: 100px;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
 <script>
 $(() => {
 	/*
@@ -385,7 +389,10 @@ $(() => {
 	}
 
 	function initDate() {
-		$('#date-input, #search-date-input').val(replaceAll(formatDate(new Date()), '/', '-'));
+		$('#date-input, #search-date-input').datepicker({ 
+    		dateFormat: 'yy/mm/dd',
+		});
+		$('#date-input, #search-date-input').val(formatDate(new Date()));
 	}
 
 	function initShopSelect() {
@@ -753,11 +760,11 @@ $(() => {
 			const shop = getShopById(_inputShopId);
 			const game = getGameById(_inputGameId);
 
-			confirm(`登録しますか？\n\n日付: ${replaceAll($('#date-input').val(), '-', '/')}\n店舗: ${shop.name}\n台番号: ${_inputGameNumber}\n機種(略称): ${game.shortName}\n玉数: ${_inputBall}\n回転数: ${_inputTime}`);
+			confirm(`登録しますか？\n\n日付: ${$('#date-input').val()}\n店舗: ${shop.name}\n台番号: ${_inputGameNumber}\n機種(略称): ${game.shortName}\n玉数: ${_inputBall}\n回転数: ${_inputTime}`);
 
 			// 登録処理
 			_data.push({
-				date: replaceAll($('#date-input').val(), '-', '/'),
+				date: $('#date-input').val(),
 				shopId: _inputShopId,
 				gameId: _inputGameId,
 				gameNumber: _inputGameNumber,
@@ -862,7 +869,7 @@ $(() => {
 			<table>
 				<thead></thead>
 				<tbody>
-					<tr><td width="20%">日付</td><td width="80%"><input type="date" id="date-input"></td></tr>
+					<tr><td width="20%">日付</td><td width="80%"><input type="text" id="date-input"></td></tr>
 					<tr><td>店舗</td><td><select id="shop-select"></select></td></tr>
 					<tr><td>店舗情報</td><td><span id="shop-info-span"></span></td></tr>
 					<tr><td>台番号</td><td><input type="text" id="number-text"></td></tr>
@@ -886,7 +893,7 @@ $(() => {
 			<table>
 				<thead></thead>
 				<tbody>
-					<tr><td>日付</td><td><input type="date" id="search-date-input">&nbsp;<input type="button" id="search-date-clear-button" value="クリア"></td></tr>
+					<tr><td>日付</td><td><input type="text" id="search-date-input">&nbsp;<input type="button" id="search-date-clear-button" value="クリア"></td></tr>
 					<tr><td>店舗</td><td><select id="search-shop-select"></select></td></tr>
 					<tr><td>台番号</td><td><input type="text" id="search-number-text">&nbsp;<input type="button" id="search-number-clear-button" value="クリア">&nbsp;<input type="button" id="search-button" value="検索"></td></tr>
 					<tr><td>回転数</td><td><span id="rotation-count-span"></span></td></tr>
