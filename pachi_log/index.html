@@ -635,9 +635,12 @@ $(() => {
 
 		$('#search-date-clear-button').click(e => {
 			$('#search-date-input').val('');
-			//alert($('#search-date-input').val() === '');
+			setTimeout(() => {
+				alert($('#search-date-input').val() === '');
+				updateList();
+			}, 500);
 			//alert($('#search-date-input').val().length);
-			updateList();
+			//updateList();
 		});
 
 		$('#search-date-input, #search-shop-select').change(updateList);
