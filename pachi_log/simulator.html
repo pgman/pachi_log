@@ -178,6 +178,7 @@ $(() => {
 	            console.log('1当選の期待値（円）', 3.57 * (outBalls - inBalls) / TRIAL_COUNT);
 	             console.log('1当選の期待値（玉）', (outBalls - inBalls) / TRIAL_COUNT);
 	             $('#per-hit-td').html(((outBalls - inBalls) / TRIAL_COUNT).toFixed(2));
+	             $('#yen-per-hit-td').html((3.57 * (outBalls - inBalls) / TRIAL_COUNT).toFixed(2));
 	            console.log('all hit times',
 	            	info.reduce((p, c) => p + c.hitCount, 0));
 	            if(TRIAL_COUNT < 100) {
@@ -286,9 +287,11 @@ th, td {
 		<table>
 			<thead>
 				<th>1当選の期待値（玉）</th>
+				<th>1当選の期待値（円）</th>
 			</thead>
 			<tbody>
 				<td id="per-hit-td">--</td>
+				<td id="yen-per-hit-td">--</td>
 			</tbody>
 		</table>
 	</fieldset>
