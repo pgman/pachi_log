@@ -392,12 +392,15 @@ $(() => {
 		$('#date-input, #search-date-input').datepicker({ 
     		dateFormat: 'yy/mm/dd',
 		});
-		$('#date-input, #search-date-input').val(formatDate(new Date()));
+		$('#date-input, #search-date-input, #rotation-rate-end-date').val(formatDate(new Date()));
+		var date = new Date();
+		date.setDate(date.getDate() - 7);
+		$('#rotation-rate-start-date').val(formatDate(date));
 	}
 
 	function initShopSelect() {
 		const html = _SHOPS.reduce((p, c) => p + `<option value=${c.id}>${c.name}</option>`, '');
-		$('#shop-select, #detail-shop-select').html(html);
+		$('#shop-select, #detail-shop-select, #rotation-rate-shop-select').html(html);
 		const searchHtml = `<option value="all">--</option>` + html;
 		$('#search-shop-select').html(searchHtml);
 	}
@@ -443,14 +446,15 @@ $(() => {
 		// リストを描画する
 		let timeCount = 0, ballCount = 0;
 		let html = '';
+		//alert('search-date', $('#search-date-input').val());
 		for(let i = _data.length - 1; i >= 0; i -= 1) {
 			const c = _data[i];
 			const shop = getShopById(c.shopId);
 			const game = getGameById(c.gameId);
 
 			// 検索条件を満たすか調べる
-			const searchDate = replaceAll($('#search-date-input').val(), '-', '/');
-			if($('#search-date-input').val() === '') {
+			const searchDate = $('#search-date-input').val();
+			if(searchDate === '') {
 
 			} else if(searchDate && c.date !== searchDate) {
 				continue;
@@ -572,6 +576,86 @@ $(() => {
 			rhtml += `<td>${time}</td>`;
 			rhtml += '</tr>';
 		});
+		//$('#rotation-rate-tbody').html(rhtml);
+		updateRotationRate();
+	}
+
+	function updateRotationRate() {
+		const startDate = $('#rotation-rate-start-date').val();
+		const endDate = $('#rotation-rate-end-date').val();
+		let rhtml = '';
+		const rList = [];
+			
+		for(let i = 0, date = startDate; date <= endDate; i += 1) {
+			console.log(date);			
+
+			for(let i = 0; i < _data.length; i += 1) {
+				const c = _data[i];
+				const shop = getShopById(c.shopId);
+				const game = getGameById(c.gameId);
+
+				// 日付
+				if(c.date !== date) {
+					continue;
+				}
+				// 店舗
+				const searchShopId = $('#rotation-rate-shop-select').val();
+				if(c.shopId !== searchShopId) {
+					continue;
+				}
+
+				const index = rList.findIndex(r => {
+					if(r.date === c.date && r.shopId === c.shopId && r.gameId === c.gameId
+						&& r.gameNumber == c.gameNumber) {
+						return true;
+					} else {
+						return false;
+					}
+				});
+
+				let data;
+				if(index >= 0) {
+					data = rList[index];
+				} else {
+					data = {
+						date: c.date,
+						shopId: c.shopId,
+						shopName: shop.name,
+						gameId: c.gameId,
+						gameNumber: c.gameNumber,
+						gameName: game.shortName,
+						array: []
+					};
+					rList.push(data);
+				}
+				if(c.details.length) {
+					const last = c.details[c.details.length - 1];
+					data.array.push({
+						ball: c.ball - last.ball,
+						time: last.time - c.time
+					});
+				}
+			}		
+		
+
+			// dateを更新
+			const tmpDate = new Date(startDate);
+			tmpDate.setDate(tmpDate.getDate() + (i + 1));
+			date = formatDate(tmpDate);
+		}
+		rList.forEach(r => {
+			if(r.array.length === 0) { return; }
+			rhtml += '<tr>';
+			rhtml += `<td>${r.date}</td>`;
+			rhtml += `<td>${r.shopName}</td>`;
+			rhtml += `<td>${r.gameNumber}</td>`;
+			rhtml += `<td>${r.gameName}</td>`;
+			let ball = r.array.reduce((p, c) => p + c.ball, 0);
+			let time = r.array.reduce((p, c) => p + c.time, 0);
+			rhtml += `<td>${(250 * time / ball).toFixed(2)}</td>`;
+			rhtml += `<td>${time}</td>`;
+			rhtml += '</tr>';
+		});
 		$('#rotation-rate-tbody').html(rhtml);
 	}
 
@@ -643,11 +727,8 @@ $(() => {
 		$('#search-date-clear-button').click(e => {
 			$('#search-date-input').val('');
 			setTimeout(() => {
-				alert($('#search-date-input').val() === '');
 				updateList();
-			}, 500);
-			//alert($('#search-date-input').val().length);
-			//updateList();
+			}, 100);
 		});
 
 		$('#search-date-input, #search-shop-select').change(updateList);
@@ -660,6 +741,8 @@ $(() => {
 			$('#search-number-text').val('');
 			updateList();
 		});
+
+		$('#rotation-rate-button').click(updateList);
 
 		$('body').on('click', '.edit-data', e => {
 			_selectedDataIndex = parseInt($(e.target).parent().parent().prop('id').substring(3), 10);
@@ -906,9 +989,17 @@ $(() => {
 	<div id="">
 		<fieldset>
 			<legend>回転率</legend>
+			<input id="rotation-rate-start-date" type="text">
+			～
+			<input id="rotation-rate-end-date" type="text">
+			<br>
+			<select id="rotation-rate-shop-select"></select>
+			<br>
+			<button id="rotation-rate-button">更新</button>
+			<br>			
 			<table id="rotation-rate-table">
 				<thead>
-				<tr><th>店舗</th><th>台番号</th><th>機種(略称)</th><th>回転率</th><th>回転数</th></tr>
+				<tr><th>日付</th><th>店舗</th><th>台番号</th><th>機種(略称)</th><th>回転率</th><th>回転数</th></tr>
 				</thead>
 				<tbody id="rotation-rate-tbody"></tbody>
 			</table>			
