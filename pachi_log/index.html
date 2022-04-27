@@ -603,6 +603,11 @@ $(() => {
 				if(c.shopId !== searchShopId) {
 					continue;
 				}
+				// 台番号
+				const searchNumber = parseInt($('#rotation-rate-number-text').val());
+				if(!isNaN(searchNumber) && c.gameNumber !== searchNumber) {
+					continue;
+				}
 
 				const index = rList.findIndex(r => {
 					if(r.date === c.date && r.shopId === c.shopId && r.gameId === c.gameId
@@ -995,6 +1000,7 @@ $(() => {
 			<br>
 			<select id="rotation-rate-shop-select"></select>
 			<br>
+			台番号<input id="rotation-rate-number-text" type="text">
 			<button id="rotation-rate-button">更新</button>
 			<br>			
 			<table id="rotation-rate-table">
