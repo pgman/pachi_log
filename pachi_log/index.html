@@ -22,7 +22,7 @@ html, body {
 	text-align: center;
 	padding: 3px;
 }
-#number-text, #ball-text, #time-text, #search-number-text, #detail-ball-text, #detail-time-text {
+#number-text, #ball-text, #time-text, #search-number-text, #detail-ball-text, #detail-time-text, #hit-text, #remain-text {
 	width: 100px;
 }
 .plus-button {
@@ -51,6 +51,19 @@ html, body {
 #detail-game-memo-text {
 	width: 600px;
 	height: 100px;
+}
+#round-4-button, .span-4-round {
+	background-color: lightblue;
+}
+#round-6-button, .span-6-round {
+	background-color: lightgreen;
+}
+#round-10-button, .span-10-round {
+	background-color: lightpink;
+}
+.span-round {
+	margin: 10px;
+	border-radius: 3px;
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
@@ -371,7 +384,10 @@ $(() => {
 	_inputShopId = 'osakahalltengo',
 	_inputGameId = 'wanwan',
 	_inputGameNumber, _inputBall, _inputTime,
-	_selectedDataIndex;
+	_selectedDataIndex,
+	_inputHit,
+	_inputRemain,
+	_inputRounds;
 
 	function init() {
 		$('#main-page').show();
@@ -475,13 +491,16 @@ $(() => {
 			html += `<td>${shop.name}</td>`;
 			html += `<td>${c.gameNumber}</td>`;
 			html += `<td>${game.shortName}</td>`;
+			html += `<td>${c.hit}</td>`;
+			html += `<td>${c.rounds.length}</td>`;
+			html += `<td>${c.rounds.reduce((p, c) => p + c, 0)}R</td>`;
 			let time = 0;
 			if(c.details.length) {
 				const last = c.details[c.details.length - 1];
 				time = last.time - c.time;
 			}
 			html += `<td>${time}</td>`;
-			html += `<td>${game.border}</td>`;
+			//html += `<td>${game.border}</td>`;
 			let tps = 0;
 			if(c.details.length) {
 				const last = c.details[c.details.length - 1];
@@ -587,8 +606,7 @@ $(() => {
 		const rList = [];
 			
 		for(let i = 0, date = startDate; date <= endDate; i += 1) {
-			console.log(date);			
-
+			
 			for(let i = 0; i < _data.length; i += 1) {
 				const c = _data[i];
 				const shop = getShopById(c.shopId);
@@ -706,6 +724,19 @@ $(() => {
 		html += detailHtml;
 
 		$('#detail-body').html(html);
+
+		// 当たり情報
+		$('#hit-text').val(_inputHit);
+		$('#remain-td').text(_inputRemain);
+		let roundHtml = '';		
+		_inputRounds.forEach((r, i) => {
+			if(i !== 0 && i % 5 === 0) {
+				roundHtml += '<br>';
+			}
+			roundHtml += `<span class="span-round span-${r}-round">${r}R</span>`;
+			
+		});
+		$('#round-td').html(roundHtml);
 	}
 
 	function attachEvents() {
@@ -762,6 +793,9 @@ $(() => {
 		    	$('#detail-ball-text').val(lastDetail.ball);
 		    	$('#detail-time-text').val(lastDetail.time);
 		    }
+		    _inputHit = selectedData.hit;
+		    _inputRemain = selectedData.remain;
+		    _inputRounds = selectedData.rounds;
 		    updateDetail();
 		});
 
@@ -859,6 +893,9 @@ $(() => {
 				ball: _inputBall,
 				time: _inputTime,
 				details: [],
+				hit: 0,	// 初当たり回転数
+				remain: 0,	// 初当たり時の保留
+				rounds: [], // 当たりのラウンド
 			});
 
 			saveData();
@@ -887,6 +924,54 @@ $(() => {
 			saveData();
 			updateDetail();
 		});
+
+		$('#hit-text').on('input', e => {
+			const selectedData = _data[_selectedDataIndex];
+			const hit = parseInt($('#hit-text').val());
+
+			if(isNaN(hit) || isNaN(hit)) {
+				//alert('入力が不正です');
+				return;
+			}
+
+			_inputHit = hit;
+			selectedData.hit = _inputHit;
+			saveData();
+			updateDetail();
+		});
+
+		// 保留数ボタン
+		$('.remain-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+			const id = $(e.target).prop('id');
+			_inputRemain = parseInt(id.substring(7,8));
+			selectedData.remain = _inputRemain;
+			saveData();
+			updateDetail();
+		});
+
+		// ラウンドボタン
+		$('.round-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+			const id = $(e.target).prop('id');
+			let round = parseInt(id.substring(6,7));
+			if(id === 'round-10-button') {
+				round = 10;
+			}
+			_inputRounds.push(round);
+			selectedData.rounds = _inputRounds;
+			saveData();
+			updateDetail();
+		});
+		
+		// ラウンド削除ボタン	
+		$('#delete-round-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+			_inputRounds.pop();
+			selectedData.rounds = _inputRounds;
+			saveData();
+			updateDetail();
+		});	
 
 		// 回転数登録
 		$('#regist-detail-button').click(e => {
@@ -938,6 +1023,15 @@ $(() => {
 			}
 			if(typeof(d.gameNumber) === 'string') {
 				d.gameNumber = Number(d.gameNumber);
+			}
+			if(typeof(d.hit) === 'undefined') {// 初当たり回転数
+				d.hit = 0;
+			}
+			if(typeof(d.remain) === 'undefined') {// 当たり時の保留
+				d.remain = 0;
+			}
+			if(typeof(d.rounds) === 'undefined') {// ラウンド数
+				d.rounds = [];
 			}
 		});
 	}
@@ -1015,7 +1109,20 @@ $(() => {
 	<div id="game-list-div">
 		<table id="data-table">
 			<thead>
-				<tr><th>日付</th><th>店舗</th><th>台番号</th><th>機種(略称)</th><th>回転数</th><th>ボーダー</th><th>回転率</th><th>編集</th><th>削除</th></tr>
+				<tr>
+					<th>日付</th>
+					<th>店舗</th>
+					<th>台番号</th>
+					<th>機種(略称)</th>
+					<!--<th>ボーダー</th>-->
+					<th>初</th>
+					<th>当</th>
+					<th>R</th>
+					<th>回転数</th>
+					<th>回転率</th>
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
 			</thead>
 			<tbody id="data-body">
 			</tbody>
@@ -1056,6 +1163,51 @@ $(() => {
 			<br>
 			<button id="regist-detail-memo-button">メモ登録</button>
 		</fieldset>
+	</div>
+	<br>
+	<div id="hit-div">
+		<fieldset>
+			<legend>当たり情報登録</legend>
+			<table>
+				<thead></thead>
+				<tbody>
+					<tr>
+						<td>初当たり回転数</td>
+						<td><input type="text" id="hit-text"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>保留数</td>
+						<td id="remain-td"></td>
+						<td>
+							&nbsp;&nbsp;
+							<button id="remain-0-button" class="remain-button">0個</button>&nbsp;&nbsp;
+							<button id="remain-1-button" class="remain-button">1個</button>&nbsp;&nbsp;
+							<button id="remain-2-button" class="remain-button">2個</button>&nbsp;&nbsp;
+							<button id="remain-3-button" class="remain-button">3個</button>&nbsp;&nbsp;
+							<button id="remain-4-button" class="remain-button">4個</button>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>ラウンド</td>
+						<td id="round-td"></td>
+						<td>
+							&nbsp;&nbsp;
+							<button id="round-4-button" class="round-button">4R</button>&nbsp;&nbsp;
+							<button id="round-6-button" class="round-button">6R</button>&nbsp;&nbsp;
+							<button id="round-10-button" class="round-button">10R</button>&nbsp;&nbsp;
+							<button id="delete-round-button">R削除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>		
 	</div>
 	<br>
 	<div id="regist-div">
