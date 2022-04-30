@@ -122,6 +122,54 @@ $(() => {
 	],
 	_GAMES = [	
 		{
+			id: 'oumi4sp',
+			shortName: '大海4SP',
+			name: 'P大海物語4スペシャル',
+			border: 18.5,
+			info: '大当り確率: 1/319.69, ST突入率: 52%, <br>ボーダー:18.5',
+			yuTime: false,
+		},	
+		{
+			id: 'devilman',
+			shortName: 'デビルマン',
+			name: 'Pデビルマン～疾風迅雷～',
+			border: 19.0,
+			info: '大当り確率: 1/319.69, ST突入率: 60%, 継続率: 93.2%, <br>ボーダー:19.0',
+			yuTime: false,
+		},	
+		{
+			id: 'vvvama',
+			shortName: 'VVV甘',
+			name: 'Pフィーバー革命機ヴァルヴレイヴ2 Lightver.',
+			border: 17.2,
+			info: '大当り確率: 1/319.6, ST突入率: 28.5%, 継続率: 83%, <br>ボーダー:17.2 このボーダーは怪しい',
+			yuTime: false,
+		},	
+		{
+			id: 'pokinawa5',
+			shortName: 'P沖縄5',
+			name: 'Pスーパー海物語 IN 沖縄5',
+			border: 17.9,
+			info: '大当り確率: 1/319.6, ST突入率: 60%, <br>ボーダー:17.9',
+			yuTime: false,
+		},	
+		{
+			id: 'strikewitches2',
+			shortName: 'パンツ源',
+			name: 'Pストライクウィッチーズ2',
+			border: 19.4,
+			info: '大当り確率: 1/229.1, ST突入率: 58%, 継続率: 90%, <br>ボーダー:19.4',
+			yuTime: false,
+		},	
+		{
+			id: 'salesama',
+			shortName: '笑う甘',
+			name: 'PA笑ゥせぇるすまん 最後の忠告',
+			border: 16,
+			info: '大当り確率: 1/77.74, ST突入率: 100%, 継続率: 62.3%, <br>ボーダー:16',
+			yuTime: false,
+		},	
+		{
 			id: 'norimono99',
 			shortName: 'PA乗物娘',
 			name: 'PA乗物娘',
@@ -1174,14 +1222,13 @@ $(() => {
 					<tr>
 						<td>初当たり回転数</td>
 						<td><input type="text" id="hit-text"></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
 					</tr>
 					<tr>
 						<td>保留数</td>
-						<td id="remain-td"></td>
+						<td id="remain-td"></td>						
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
 						<td>
 							&nbsp;&nbsp;
 							<button id="remain-0-button" class="remain-button">0個</button>&nbsp;&nbsp;
@@ -1192,11 +1239,11 @@ $(() => {
 						</td>
 					</tr>
 					<tr>
-						<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+						<td>ラウンド</td>
+						<td id="round-td"></td>						
 					</tr>
 					<tr>
-						<td>ラウンド</td>
-						<td id="round-td"></td>
+						<td>&nbsp;</td>
 						<td>
 							&nbsp;&nbsp;
 							<button id="round-4-button" class="round-button">4R</button>&nbsp;&nbsp;
