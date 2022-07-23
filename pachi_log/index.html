@@ -125,6 +125,22 @@ $(() => {
 	],
 	_GAMES = [	
 		{
+			id: 'bakabon',
+			shortName: 'バカボン',
+			name: 'P神・天才バカボン～神SPEC～',
+			border: 17.3,
+			info: '大当り確率: 1/319.7, ST突入率: 75%, ST継続率: 約64.6%<br>上位ラッシュ継続率: 81.2%',
+			yuTime: false,
+		},	
+		{
+			id: 'piramiden',
+			shortName: 'ピラミッ伝',
+			name: 'P一球魂GOLDピラミッ伝',
+			border: 18.3,
+			info: '大当り確率: 1/179.5, ST突入率: 50.5%, ST継続率: 約75.2%',
+			yuTime: false,
+		},	
+		{
 			id: 'yamato199',
 			shortName: 'ヤマト199',
 			name: 'P宇宙戦艦ヤマト2202 -ONLY ONE-',
@@ -965,11 +981,11 @@ $(() => {
 		    $('#detail-page').show();
 		    const selectedData = _data[_selectedDataIndex];
 		    if(!selectedData.details.length) {
-		    	$('#detail-ball-text').val(selectedData.ball);
+		    	$('#detail-ball-text').val(selectedData.ball - 125);
 		    	$('#detail-time-text').val(selectedData.time);
 		    } else {
 		    	const lastDetail = selectedData.details[selectedData.details.length - 1];
-		    	$('#detail-ball-text').val(lastDetail.ball);
+		    	$('#detail-ball-text').val(lastDetail.ball - 125);
 		    	$('#detail-time-text').val(lastDetail.time);
 		    }
 		    _inputHit = selectedData.hit;
@@ -1061,7 +1077,9 @@ $(() => {
 			const shop = getShopById(_inputShopId);
 			const game = getGameById(_inputGameId);
 
-			confirm(`登録しますか？\n\n日付: ${$('#date-input').val()}\n店舗: ${shop.name}\n台番号: ${_inputGameNumber}\n機種(略称): ${game.shortName}\n玉数: ${_inputBall}\n回転数: ${_inputTime}`);
+			if(!confirm(`登録しますか？\n\n日付: ${$('#date-input').val()}\n店舗: ${shop.name}\n台番号: ${_inputGameNumber}\n機種(略称): ${game.shortName}\n玉数: ${_inputBall}\n回転数: ${_inputTime}`)) {
+				return;
+			}
 
 			// 登録処理
 			_data.push({
