@@ -7,6 +7,22 @@ const AMA_DEGI_GAMES = [
 		border: 16.5,
 		info: '大当り確率: 1/99.9, ST突入率: 100%, ST継続率: 41.3%',
 		yuTime: false,
+	},	
+	{
+		id: 'wanwan',
+		shortName: 'Pわんパラ',
+		name: 'PAわんわんパラダイスV',
+		border: 16.8,
+		info: '大当り確率: 1/99.9, ST突入率: 42%, ST継続率: 80%, <br>15回回れば、天井まで200で期待値プラス',
+		yuTime: true,
+	},		
+	{
+		id: 'kinnikuman3meat',
+		shortName: 'キン肉マン3ミート',
+		name: 'ぱちんこキン肉マン3 キン肉星王位争奪編 特盛ミートくんver. ',
+		border: 17.2,
+		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 90% or 95%',
+		yuTime: false,
 	},		
 	{
 		id: 'cinderella',
@@ -15,14 +31,6 @@ const AMA_DEGI_GAMES = [
 		border: 16.5,
 		info: `大当り確率: 1/141.1, ST突入率: 40%, <br>
 		おしりペンペンタイムBONUS: 継続率: 約91%, <br>BATTLE MODE勝率: 約65%`,
-		yuTime: false,
-	},		
-	{
-		id: 'kinnikuman3meat',
-		shortName: 'キン肉マン3ミート',
-		name: 'ぱちんこキン肉マン3 キン肉星王位争奪編 特盛ミートくんver. ',
-		border: 17.2,
-		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 90% or 95%',
 		yuTime: false,
 	},		
 	{
@@ -104,14 +112,6 @@ const AMA_DEGI_GAMES = [
 		border: 18.1,
 		info: '大当り確率: 1/99.90, ST突入率: 約71%, 継続率: 約71%, <br>ボーダー:18.1',
 		yuTime: false,
-	},	
-	{
-		id: 'wanwan',
-		shortName: 'Pわんパラ',
-		name: 'PAわんわんパラダイスV',
-		border: 16.8,
-		info: '大当り確率: 1/99.9, ST突入率: 42%, ST継続率: 80%, <br>15回回れば、天井まで200で期待値プラス',
-		yuTime: true,
 	},
 	{
 		id: 'agunes99',
