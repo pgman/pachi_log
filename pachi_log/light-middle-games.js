@@ -1,6 +1,14 @@
 // ライトミドル
 const LIGHT_MIDDLE_GAMES = [
 	{
+		id: 'kuroumi199',
+		shortName: '黒海199',
+		name: 'P大海物語4スペシャル BLACK',
+		border: 17.6,
+		info: '大当り確率: 1/199.8, ST突入率: 100%, ST継続率: 72%',
+		yuTime: false,
+	},		
+	{
 		id: 'shinfogia3',
 		shortName: 'シンフォ3',
 		name: 'Pフィーバー戦姫絶唱シンフォギア3黄金絶唱',
