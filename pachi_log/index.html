@@ -227,7 +227,7 @@ $(() => {
 			}
 			
 			html += `<tr id="tr-${i}">`;
-			html += `<td>${c.date}</td>`;
+			html += `<td>${c.date.substring(5)}</td>`;
 			html += `<td>${shop.shortName}</td>`;
 			html += `<td>${c.gameNumber}</td>`;
 			html += `<td>${game.shortName}</td>`;
@@ -324,20 +324,6 @@ $(() => {
 				});
 			}
 		}
-		let rhtml = '';
-		rList.forEach(r => {
-			if(r.array.length === 0) { return; }
-			rhtml += '<tr>';
-			rhtml += `<td>${r.shopName}</td>`;
-			rhtml += `<td>${r.gameNumber}</td>`;
-			rhtml += `<td>${r.gameName}</td>`;
-			let ball = r.array.reduce((p, c) => p + c.ball, 0);
-			let time = r.array.reduce((p, c) => p + c.time, 0);
-			rhtml += `<td>${(250 * time / ball).toFixed(2)}</td>`;
-			rhtml += `<td>${time}</td>`;
-			rhtml += '</tr>';
-		});
-		//$('#rotation-rate-tbody').html(rhtml);
 		updateRotationRate();
 	}
 
@@ -383,9 +369,9 @@ $(() => {
 					data = rList[index];
 				} else {
 					data = {
-						date: c.date,
+						date: c.date.substring(5),
 						shopId: c.shopId,
-						shopName: shop.name,
+						shopName: shop.shortName,
 						gameId: c.gameId,
 						gameNumber: c.gameNumber,
 						gameName: game.shortName,
