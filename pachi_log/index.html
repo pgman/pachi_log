@@ -102,7 +102,8 @@ $(() => {
 	_selectedDataIndex,
 	_inputHit,
 	_inputRemain,
-	_inputRounds;
+	_inputRounds,
+	_inputOvers;
 
 	function init() {
 		$('#main-page').show();
@@ -248,6 +249,8 @@ $(() => {
 				ballCount += c.ball - last.ball;
 			}
 			html += `<td>${tps === 0 ? '--' : tps.toFixed(1)}</td>`;
+			// オーバー入賞率
+			html += `<td>${getOverHtml(c.overs, c.rounds)}</td>`;
 			html += `<td><button class="edit-data">編集</button></td>`;
 			html += `<td><button class="delete-data">削除</button></td>`;
 			html += `</tr>`;
@@ -467,15 +470,38 @@ $(() => {
 		// 当たり情報
 		$('#hit-text').val(_inputHit);
 		$('#remain-td').text(_inputRemain);
+		// ラウンド
 		let roundHtml = '';		
 		_inputRounds.forEach((r, i) => {
 			if(i !== 0 && i % 5 === 0) {
 				roundHtml += '<br>';
 			}
-			roundHtml += `<span class="span-round span-${r}-round">${r}R</span>`;
-			
+			roundHtml += `<span class="span-round span-${r}-round">${r}R</span>`;			
 		});
 		$('#round-td').html(roundHtml);
+		// オーバー入賞
+		let overHtml = '';
+		_inputOvers.forEach((o, i) => {
+			if(i !== 0 && i % 5 === 0) {
+				overHtml += '<br>';
+			}
+			overHtml += `<span class="span-round">${o}回</span>`;			
+		});
+		$('#over-td').html(overHtml);
+		// オーバー入賞率
+		$('#over-rate-td').html(getOverHtml(_inputOvers, _inputRounds));
+	}
+	// オーバー入賞率のHTMLを取得する
+	function getOverHtml(argOvers, argRounds) {
+		const overs = argOvers.reduce((p, c) => p + c, 0);
+		const rounds = argRounds.reduce((p, c) => p + c, 0);
+		let rateHtml = '';
+		if(rounds === 0) {
+			rateHtml = '--';
+		} else {
+			rateHtml = `${(overs / rounds * 100).toFixed(2)}%`;
+		}
+		return rateHtml;
 	}
 
 	function attachEvents() {
@@ -535,6 +561,7 @@ $(() => {
 		    _inputHit = selectedData.hit;
 		    _inputRemain = selectedData.remain;
 		    _inputRounds = selectedData.rounds;
+		    _inputOvers = selectedData.overs;
 		    updateDetail();
 		});
 
@@ -637,6 +664,7 @@ $(() => {
 				hit: 0,	// 初当たり回転数
 				remain: 0,	// 初当たり時の保留
 				rounds: [], // 当たりのラウンド
+				overs: [], // オーバー入賞の数
 			});
 
 			saveData();
@@ -714,6 +742,27 @@ $(() => {
 			updateDetail();
 		});	
 
+		// オーバー入賞ボタン
+		$('.over-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+			const id = $(e.target).prop('id');
+			let over = parseInt(id.substring(5,6));
+			console.log(over);
+			_inputOvers.push(over);
+			selectedData.overs = _inputOvers;
+			saveData();
+			updateDetail();
+		});
+
+		// オーバー入賞削除ボタン	
+		$('#delete-over-button').click(e => {
+			const selectedData = _data[_selectedDataIndex];
+			_inputOvers.pop();
+			selectedData.overs = _inputOvers;
+			saveData();
+			updateDetail();
+		});	
+
 		// 回転数登録
 		$('#regist-detail-button').click(e => {
 			const detailBall = parseInt($('#detail-ball-text').val());
@@ -773,6 +822,9 @@ $(() => {
 			}
 			if(typeof(d.rounds) === 'undefined') {// ラウンド数
 				d.rounds = [];
+			}
+			if(typeof(d.overs) === 'undefined') {// オーバー入賞
+				d.overs = [];
 			}
 		});
 	}
@@ -862,6 +914,7 @@ $(() => {
 					<th>R</th>
 					<th>回転数</th>
 					<th>回転率</th>
+					<th>Over率</th>
 					<th>編集</th>
 					<th>削除</th>
 				</tr>
@@ -929,7 +982,11 @@ $(() => {
 							<button id="remain-1-button" class="remain-button">1個</button>&nbsp;&nbsp;
 							<button id="remain-2-button" class="remain-button">2個</button>&nbsp;&nbsp;
 							<button id="remain-3-button" class="remain-button">3個</button>&nbsp;&nbsp;
-							<button id="remain-4-button" class="remain-button">4個</button>
+							<button id="remain-4-button" class="remain-button">4個</button>&nbsp;&nbsp;
+							<button id="remain-5-button" class="remain-button">5個</button>&nbsp;&nbsp;
+							<button id="remain-6-button" class="remain-button">6個</button>&nbsp;&nbsp;
+							<button id="remain-7-button" class="remain-button">7個</button>&nbsp;&nbsp;
+							<button id="remain-8-button" class="remain-button">8個</button>
 						</td>
 					</tr>
 					<tr>
@@ -947,6 +1004,31 @@ $(() => {
 							<button id="round-10-button" class="round-button">10R</button>&nbsp;&nbsp;
 							<button id="delete-round-button">R削除</button>
 						</td>
+					</tr>
+					<tr>
+						<td>オーバー入賞</td>
+						<td id="over-td"></td>						
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							&nbsp;&nbsp;
+							<button id="over-0-button" class="over-button">0回</button>&nbsp;&nbsp;
+							<button id="over-1-button" class="over-button">1回</button>&nbsp;&nbsp;
+							<button id="over-2-button" class="over-button">2回</button>&nbsp;&nbsp;
+							<button id="over-3-button" class="over-button">3回</button>&nbsp;&nbsp;
+							<button id="over-4-button" class="over-button">4回</button>&nbsp;&nbsp;
+							<button id="over-5-button" class="over-button">5回</button>&nbsp;&nbsp;
+							<button id="over-6-button" class="over-button">6回</button>&nbsp;&nbsp;
+							<button id="over-7-button" class="over-button">7回</button>&nbsp;&nbsp;
+							<button id="over-8-button" class="over-button">8回</button>&nbsp;&nbsp;
+							<button id="over-9-button" class="over-button">9回</button>&nbsp;&nbsp;
+							<button id="delete-over-button">Over削除</button>
+						</td>
+					</tr>
+					<tr>
+						<td>オーバー入賞率</td>
+						<td id="over-rate-td"></td>						
 					</tr>
 				</tbody>
 			</table>
