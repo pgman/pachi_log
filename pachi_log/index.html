@@ -369,7 +369,7 @@ $(() => {
 					data = rList[index];
 				} else {
 					data = {
-						date: c.date.substring(5),
+						date: c.date,
 						shopId: c.shopId,
 						shopName: shop.shortName,
 						gameId: c.gameId,
@@ -397,7 +397,7 @@ $(() => {
 		rList.forEach(r => {
 			if(r.array.length === 0) { return; }
 			rhtml += '<tr>';
-			rhtml += `<td>${r.date}</td>`;
+			rhtml += `<td>${r.date.substring(5)}</td>`;
 			rhtml += `<td>${r.shopName}</td>`;
 			rhtml += `<td>${r.gameNumber}</td>`;
 			rhtml += `<td>${r.gameName}</td>`;
