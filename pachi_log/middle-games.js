@@ -1,5 +1,29 @@
 // ミドル
-const MIDDLE_GAMES = [
+const MIDDLE_GAMES = [		
+	{
+		id: 'pokinawa5',
+		shortName: '沖海5',
+		name: 'Pスーパー海物語 IN 沖縄5',
+		border: 17.9,
+		info: '大当り確率: 1/319.6, ST突入率: 60%, <br>ボーダー:17.9',
+		yuTime: false,
+	},	
+	{
+		id: 'oumi4sp',
+		shortName: '大海4SP',
+		name: 'P大海物語4スペシャル',
+		border: 18.5,
+		info: '大当り確率: 1/319.69, ST突入率: 52%, <br>ボーダー:18.5',
+		yuTime: false,
+	},		
+	{
+		id: 'shinikki',
+		shortName: '一騎当千',
+		name: 'P真・一騎当千',
+		border: 17.0,
+		info: '大当り確率: 1/319.7, ST突入率: 73.2%, ST継続率: 約80.0%<br>',
+		yuTime: false,
+	},	
 	{
 		id: 'karakuri',
 		shortName: 'からくり',
@@ -31,8 +55,7 @@ const MIDDLE_GAMES = [
 		border: 17.5,
 		info: '大当り確率: 1/319.7, ST突入率: 70%, ST継続率: 約81%',
 		yuTime: false,
-	},	
-	
+	},		
 	{
 		id: 'umichosenpu319',
 		shortName: '海超旋風319',
@@ -58,29 +81,13 @@ const MIDDLE_GAMES = [
 		yuTime: false,
 	},	
 	{
-		id: 'shinikki',
-		shortName: '一騎当千',
-		name: 'P真・一騎当千',
-		border: 17.0,
-		info: '大当り確率: 1/319.7, ST突入率: 73.2%, ST継続率: 約80.0%<br>',
-		yuTime: false,
-	},	
-	{
 		id: 'rezero',
 		shortName: 'Re:ゼロ',
 		name: 'Ｐ Re:ゼロから始める異世界生活 鬼がかりver．',
 		border: 16.7,
 		info: '大当り確率: 1/319.6, RUSH突入率: 55%<br>RUSH継続率: 77%',
 		yuTime: false,
-	},	
-	{
-		id: 'oumi4sp',
-		shortName: '大海4SP',
-		name: 'P大海物語4スペシャル',
-		border: 18.5,
-		info: '大当り確率: 1/319.69, ST突入率: 52%, <br>ボーダー:18.5',
-		yuTime: false,
-	},	
+	},		
 	{
 		id: 'devilman',
 		shortName: 'デビルマン',
@@ -88,15 +95,7 @@ const MIDDLE_GAMES = [
 		border: 19.0,
 		info: '大当り確率: 1/319.69, ST突入率: 60%, 継続率: 93.2%, <br>ボーダー:19.0',
 		yuTime: false,
-	},	
-	{
-		id: 'pokinawa5',
-		shortName: '沖海5',
-		name: 'Pスーパー海物語 IN 沖縄5',
-		border: 17.9,
-		info: '大当り確率: 1/319.6, ST突入率: 60%, <br>ボーダー:17.9',
-		yuTime: false,
-	},	
+	},
 	{
 		id: 'genidaten',
 		shortName: 'P源さん318',
