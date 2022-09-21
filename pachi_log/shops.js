@@ -1,5 +1,5 @@
 const SHOPS = [
-	{
+	{//test
 		id: 'osakahalltengo',
 		name: '大阪ホール天五店',
 		shortName: '天五店',
