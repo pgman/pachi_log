@@ -44,7 +44,7 @@ $(() => {
     // ラッシュ非当選時から打ち出す
     const NO_JACKPOT = false;
 
-    function calc(averageRotation, ball, simulation) {
+    function calc(normalTimes, averageRotation, ball, simulation) {
 
 	    // ボーダー(250球で何回回るか)
 	    let AVERAGE_ROTATION = averageRotation;
@@ -62,7 +62,7 @@ $(() => {
 	    let ballCount = 0;
 	    let yutimeFlag = false;
 	    let currentRealTimes = 0;
-	    let currentNormalTimes = 58; // 現在の通常の回転数
+	    let currentNormalTimes = normalTimes; // 現在の通常の回転数
 	    let currentRushTimes = 0; // 現在のラッシュの回転数
 
 	    while(true) {
@@ -113,6 +113,7 @@ $(() => {
 	                        break;
 	                    } else if(currentNormalTimes >= JITAN_TIMES + JITAN_REMAINING_TIMES) {// 時短落ち
 	                        currentNormalTimes = JITAN_TIMES + JITAN_REMAINING_TIMES + JITAN_ADITIONAL_TIMES;
+	                        //currentNormalTimes = normalTimes;
 	                        info[info.length - 1].rushFlag = false;
 	                        break;
 	                    } 
@@ -134,8 +135,8 @@ $(() => {
 	                } else if (currentRushTimes >= ST_TIMES + ST_REMAINING_TIMES) {// ST落ち
 	                    rushFlag = false;
 	                    yutimeFlag = false;
-	                    currentNormalTimes = ST_REMAINING_TIMES + JITAN_ADITIONAL_TIMES;
-	                    if(NO_JACKPOT) {// ラッシュ非当選時から打ち出す
+	                    currentNormalTimes = normalTimes;//ST_REMAINING_TIMES + JITAN_ADITIONAL_TIMES;
+	                    if(normalTimes === 0) {// ラッシュ非当選時から打ち出す
 	                        // 常にラッシュ終了したら、台を変更し且つラッシュに入らなかった台を打つ
 	                        currentNormalTimes = ST_TIMES + ST_REMAINING_TIMES + JITAN_ADITIONAL_TIMES;
 	                    }
@@ -239,21 +240,22 @@ $(() => {
 	   //  });
     // }    
     $('#calc-button').click(() => {
+    	const normal = parseFloat($('#normal-text').val());
     	const rot = parseFloat($('#rotation-text').val());
     	const ball = parseFloat($('#ball-text').val());
     	const simulation = parseFloat($('#simulation-text').val());
-    	if(isNaN(rot) || isNaN(ball) || isNaN(simulation)) {
+    	if(isNaN(normal) || isNaN(rot) || isNaN(ball) || isNaN(simulation)) {
     		alert('入力が不正です');
     		return;
     	}
-    	calc(rot, ball, simulation);
+    	calc(normal, rot, ball, simulation);
     });
 
 });
 
 </script>
 <style>
-#rotation-text, #ball-text, #simulation-text {
+#normal-text, #rotation-text, #ball-text, #simulation-text {
 	width: 80px;
 }
 input {
@@ -275,11 +277,13 @@ th, td {
 			<legend>条件</legend>
 		<table>
 			<thead>
+				<th>通常の回転数</th>
 				<th>回転率</th>
 				<th>1R出玉</th>
 				<th>シミュレーション回数</th>
 			</thead>
 			<tbody>
+				<td><input id="normal-text" type="text" value="54"></td>
 				<td><input id="rotation-text" type="text" value="18"></td>
 				<td><input id="ball-text" type="text" value="76"></td>
 				<td><input id="simulation-text" type="text" value="100000"></td>
