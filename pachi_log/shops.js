@@ -30,7 +30,7 @@ const SHOPS = [
 		info: '無し',
 	},
 	{
-		id: 'kyobashikaikan',
+		id: 'grandshatou',
 		name: 'グランシャトー',
 		shortName: 'グラン',
 		info: '無し',
@@ -45,6 +45,12 @@ const SHOPS = [
 		id: 'maruhanumeda',
 		name: 'マルハン梅田店',
 		shortName: 'マル梅田',
+		info: '無し',
+	},		
+	{
+		id: 'tennoujihall',
+		name: '天王寺ホール',
+		shortName: '天王寺ホール',
 		info: '無し',
 	},		
 ];
