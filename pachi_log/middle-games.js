@@ -44,7 +44,7 @@ const MIDDLE_GAMES = [
 		id: 'umichosenpu319',
 		shortName: '海超旋風319',
 		name: 'Pスーパー海物語 IN 沖縄5 夜桜超旋風',
-		border: 19.9,
+		border: 19.6,
 		info: '大当り確率: 1/319.68, ST突入率: 100%, ST継続率: 約90%',
 		yuTime: false,
 	},	
