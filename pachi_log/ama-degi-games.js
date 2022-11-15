@@ -17,6 +17,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: true,
 	},		
 	{
+		id: 'inuyasya2',
+		shortName: '犬夜叉2',
+		name: 'P犬夜叉2',
+		border: 16.8,
+		info: '大当り確率: 1/99.9, 最終決戦成功率: 約28%, ST継続率: 79%, 最終決戦成功率約28%で算出',
+		yuTime: false,
+	},		
+	{
 		id: 'kinnikuman3meat',
 		shortName: 'キン肉マン3ミート',
 		name: 'ぱちんこキン肉マン3 キン肉星王位争奪編 特盛ミートくんver. ',
