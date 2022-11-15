@@ -26,7 +26,7 @@ const SHOPS = [
 	{
 		id: 'kyobashikaikan',
 		name: '京橋会館',
-		shortName: '京橋ボッタ',
+		shortName: '京橋会館',
 		info: '無し',
 	},
 	{
