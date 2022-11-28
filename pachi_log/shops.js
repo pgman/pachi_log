@@ -53,4 +53,16 @@ const SHOPS = [
 		shortName: '天王寺ホール',
 		info: '無し',
 	},		
+	{
+		id: 'kicona-ama',
+		name: 'キコーナ尼崎',
+		shortName: 'キコーナ尼崎本店',
+		info: '無し',
+	},		
+	{
+		id: 'else-hall',
+		name: '他店',
+		shortName: '他',
+		info: '無し',
+	},		
 ];
