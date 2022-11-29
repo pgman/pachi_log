@@ -201,4 +201,20 @@ const AMA_DEGI_GAMES = [
 		info: '大当り確率: 1/129.51, 超源RUSH突入率: 50.1%',
 		yuTime: false,
 	},
+	{
+		id: 'umi-ama',
+		shortName: '甘海',
+		name: '海系 - 甘デジ',
+		border: 20.0,
+		info: 'メモを書き込んでください',
+		yuTime: false,
+	},
+	{
+		id: 'else-ama',
+		shortName: '甘他',
+		name: '他 - 甘デジ',
+		border: 20.0,
+		info: 'メモを書き込んでください',
+		yuTime: false,
+	},
 ];

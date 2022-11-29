@@ -184,4 +184,20 @@ const MIDDLE_GAMES = [
 		info: '大当り確率: 1/319.7, ST突入率: 75%, ST継続率: 75%',
 		yuTime: false,
 	},
+	{
+		id: 'umi',
+		shortName: '海ミドル',
+		name: '海系 - ミドル',
+		border: 20.0,
+		info: 'メモを書き込んでください',
+		yuTime: false,
+	},
+	{
+		id: 'else',
+		shortName: '他ミドル',
+		name: '他 - ミドル',
+		border: 20.0,
+		info: 'メモを書き込んでください',
+		yuTime: false,
+	},
 ];

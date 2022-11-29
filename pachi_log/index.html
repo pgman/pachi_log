@@ -99,7 +99,7 @@ $(() => {
 		{ id: 'light-middle', name: 'ライトミドル', },
 		{ id: 'middle', name: 'ミドル' },
 	],
-	_GAMES = AMA_DEGI_GAMES.concat(LIGHT_MIDDLE_GAMES, MIDDLE_GAMES, ELSE_GAMES);
+	_GAMES = AMA_DEGI_GAMES.concat(LIGHT_MIDDLE_GAMES, MIDDLE_GAMES);
 	
 	let 
 	_data = [],
@@ -698,7 +698,7 @@ $(() => {
 			updateList();
 		});
 
-		$('#rotation-rate-shop-select').change(updateList);
+		$('#rotation-rate-start-date, #rotation-rate-end-date, #rotation-rate-shop-select').change(updateList);
 		$('#rotation-rate-button').click(updateList);
 
 		$('body').on('click', '.edit-data', e => {

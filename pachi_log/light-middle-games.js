@@ -77,7 +77,7 @@ const LIGHT_MIDDLE_GAMES = [
 	{
 		id: '009199',
 		shortName: '009199',
-		name: 'P009 RE：CYBORG ACCELERATOR EDITION',
+		name: 'P009 RE: CYBORG ACCELERATOR EDITION',
 		border: 18.8,
 		info: '大当り確率: 1/199.8, ST突入率: 41%, ST回数100回<br>',
 		yuTime: false,
@@ -133,7 +133,7 @@ const LIGHT_MIDDLE_GAMES = [
 	{
 		id: 'garupan',
 		shortName: 'Pガルパン',
-		name: 'Pガールズ＆パンツァー 劇場版',
+		name: 'Pガールズ&パンツァー 劇場版',
 		border: 17.6,
 		info: '大当り確率: 1/199.8, 戦車道突入率: 54%',
 		yuTime: true,
@@ -169,5 +169,21 @@ const LIGHT_MIDDLE_GAMES = [
 		border: 17.1,
 		info: '大当り確率: 1/199.8, ST突入率: 54%, ST継続率: 83%',
 		yuTime: true,
+	},	
+	{
+		id: 'umi-light-middle',
+		shortName: '海ライトミドル',
+		name: '海系 - ライトミドル',
+		border: 20.0,
+		info: 'メモを書き込んでください',
+		yuTime: false,
+	},
+	{
+		id: 'else-light-middle',
+		shortName: '他ライトミドル',
+		name: '他 - ライトミドル',
+		border: 20.0,
+		info: 'メモを書き込んでください',
+		yuTime: false,
 	},
 ];
