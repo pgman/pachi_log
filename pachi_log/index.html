@@ -358,7 +358,7 @@ $(() => {
 			}
 		}
 
-		// todo 描画する回転率の配列を取得する
+		// 描画する回転率の配列を取得する
 		const datas = [];
 		let baseBall = 0, baseTime = 0;
 		for(let i = 0; i < _data.length; i += 1) {
@@ -376,7 +376,6 @@ $(() => {
 						time: time,
 						rotRate: time / ball * 250,
 					});
-					//console.log(time / ball * 250);
 					if(j === c.details.length - 1) {
 						baseBall += ball;
 						baseTime += time;
@@ -384,12 +383,6 @@ $(() => {
 				}
 			}
 		}
-
-		// チャート作成する(グラフをライブラリを利用して描画する)
-
-		// x軸の目盛りを作成する(一旦間引かない)
-
-		// x軸の目盛り分ボーダーを作成する
 
 		const borderLineColor = '#ec4343',
 			rotationLineColor = '#2260ea',
@@ -429,8 +422,8 @@ $(() => {
 				scales: {
 					yAxes: [{
 						ticks: {
-							suggestedMax: 28, // todo ここを動的に変更する
-							suggestedMin: 10, // todo ここを動的に変更する
+							suggestedMax: 28, 
+							suggestedMin: 10, 
 							stepSize: 4,  // 縦メモリのステップ数
 							callback: function(value, index, values){
 								return  value +  '回転'  // 各メモリのステップごとの表記（valueは各ステップの値）
