@@ -391,6 +391,10 @@ $(() => {
 		let xArray = datas.map(d => d.ball);
 		let borders = datas.map(() => borderValue);
 		let rotData = datas.map(d => d.rotRate);
+		let lastRot = 0;
+		if(datas.length) {
+			lastRot = datas[datas.length - 1].rotRate;
+		}
 
 		const ctx = document.getElementById('chart-canvas').getContext('2d');
 		_chart = new Chart(ctx, {
@@ -400,13 +404,13 @@ $(() => {
 				labels: xArray,
 				datasets: [
 					{
-						label: 'ボーダー',
+						label: 'ボーダー ' + borderValue.toFixed(1) ,
 						data: borders,
 						borderColor: borderLineColor,
 						backgroundColor: backgroundColor,
 					},
 					{
-						label: '回転率',
+						label: '回転率 ' + lastRot.toFixed(1),
 						data: rotData,
 						borderColor: rotationLineColor,
 						backgroundColor: backgroundColor,
@@ -422,11 +426,11 @@ $(() => {
 				scales: {
 					yAxes: [{
 						ticks: {
-							suggestedMax: 28, 
-							suggestedMin: 10, 
-							stepSize: 4,  // 縦メモリのステップ数
+							suggestedMax: 24, 
+							suggestedMin: 12, 
+							stepSize: 2,  // 縦メモリのステップ数
 							callback: function(value, index, values){
-								return  value +  '回転'  // 各メモリのステップごとの表記（valueは各ステップの値）
+								return  value +  '回/k'  // 各メモリのステップごとの表記（valueは各ステップの値）
 							}
 						}
 					}]
