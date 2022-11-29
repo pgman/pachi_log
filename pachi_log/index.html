@@ -14,6 +14,9 @@ html, body {
 * {	
   font-size: 24px;
 }
+#date-input, #search-date-input, #rotation-rate-start-date, #rotation-rate-end-date {
+	width: 200px;
+}
 #data-table, #detail-table, #rotation-rate-table {
     border-collapse: collapse;
 }
@@ -129,7 +132,7 @@ $(() => {
 	}
 
 	function initDate() {
-		$('#date-input, #search-date-input').datepicker({ 
+		$('#date-input, #search-date-input, #rotation-rate-start-date, #rotation-rate-end-date').datepicker({ 
     		dateFormat: 'yy/mm/dd',
 		});
 		$('#date-input, #search-date-input, #rotation-rate-end-date').val(formatDate(new Date()));
