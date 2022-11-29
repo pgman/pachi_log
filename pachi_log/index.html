@@ -72,6 +72,9 @@ html, body {
 	margin: 10px;
 	border-radius: 3px;
 }
+.selected-rotation-rate {
+	background-color: yellow;
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -85,9 +88,6 @@ html, body {
 
 <script>
 $(() => {
-	/*
-	TODO
-	 */
 	const 
 	_KEY = 'PachiLogKey',
 	_SHOPS = SHOPS,
@@ -109,7 +109,8 @@ $(() => {
 	_inputRemain,
 	_inputRounds,
 	_inputOvers,
-	_chart = null;
+	_chart = null,
+	_selectedRotationRate = null; // デフォルトで回転率の一番下のものを選択するようにし、クリックで変更可能にする
 
 	function init() {
 		$('#main-page').show();
@@ -120,7 +121,7 @@ $(() => {
 		initShopSelect();
 		initTypeSelect();
 		//initGameSelect();
-		updateList();
+		//updateList();
 	}
 
 	function replaceAll(expression, org, dest){
@@ -334,39 +335,88 @@ $(() => {
 		updateChart();
 	}
 
-	function updateChart() {
-		var ctx = document.getElementById('chart-canvas').getContext('2d');
+	// チャート(グラフ)の更新
+	function updateChart() {	
+		
+		// チャートを破棄する
 		if(_chart) {
 			_chart.destroy();
 			_chart = null;
 		}
+
+		// 描画するボーダーを取得する
+		let borderValue = -1;
+
+		const sr = _selectedRotationRate;
+		for(let i = 0; i < _data.length; i += 1) {
+			const c = _data[i];
+			const shop = getShopById(c.shopId);
+			const game = getGameById(c.gameId);
+			if(sr && c.date == sr.date && c.shopId === sr.shopId && c.gameNumber === sr.gameNumber) {
+				borderValue = game.border;
+				break;
+			}
+		}
+
+		// todo 描画する回転率の配列を取得する
+		const datas = [];
+		let baseBall = 0, baseTime = 0;
+		for(let i = 0; i < _data.length; i += 1) {
+			const c = _data[i];
+			const shop = getShopById(c.shopId);
+			const game = getGameById(c.gameId);
+			if(sr && c.date == sr.date && c.shopId === sr.shopId && c.gameNumber === sr.gameNumber) {				
+				
+				for(let j = 0; j < c.details.length; j += 1) {
+					const detail = c.details[j];
+					const ball = c.ball - detail.ball + baseBall;
+					const time = detail.time - c.time + baseTime;
+					datas.push({
+						ball: ball,
+						time: time,
+						rotRate: time / ball * 250,
+					});
+					//console.log(time / ball * 250);
+					if(j === c.details.length - 1) {
+						baseBall += ball;
+						baseTime += time;
+					}
+				}
+			}
+		}
+
+		// チャート作成する(グラフをライブラリを利用して描画する)
+
+		// x軸の目盛りを作成する(一旦間引かない)
+
+		// x軸の目盛り分ボーダーを作成する
+
+		const borderLineColor = '#ec4343',
+			rotationLineColor = '#2260ea',
+			backgroundColor = '#00000000';
+
+		let xArray = datas.map(d => d.ball);
+		let borders = datas.map(() => borderValue);
+		let rotData = datas.map(d => d.rotRate);
+
+		const ctx = document.getElementById('chart-canvas').getContext('2d');
 		_chart = new Chart(ctx, {
-			// グラフの種類：折れ線グラフを指定
 			type: 'line',
 			data: {
 				// x軸の各メモリ
-				labels: ['125', '250', '375', '500', '125', '250', '375', '500', '125', '250', '375', '500',
-				'125', '250', '375', '500', '125', '250', '375', '500', '125', '250', '375', '500',
-				'125', '250', '375', '500', '125', '250', '375', '500', '125', '250', '375', '500',
-				'125', '250', '375', '500', '125', '250', '375', '500', '125', '250', '375', '500'],
+				labels: xArray,
 				datasets: [
 					{
 						label: 'ボーダー',
-						data: [18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2,
-						18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2,
-						18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2,
-						18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2, 18.2,],
-						borderColor: "#ec4343",
-						backgroundColor: "#00000000"
+						data: borders,
+						borderColor: borderLineColor,
+						backgroundColor: backgroundColor,
 					},
 					{
 						label: '回転率',
-						data: [22.4, 23.1, 24.2, 20.0, 19.2, 19.4, 19.8, 20.4, 19.2, 19.4, 19.8, 20.4,
-						22.4, 23.1, 24.2, 20.0, 19.2, 19.4, 19.8, 20.4, 19.2, 19.4, 19.8, 20.4,
-						22.4, 23.1, 24.2, 20.0, 19.2, 19.4, 19.8, 20.4, 19.2, 19.4, 19.8, 20.4,
-						22.4, 23.1, 24.2, 20.0, 19.2, 19.4, 19.8, 20.4, 19.2, 19.4, 19.8, 20.4],
-						borderColor: "#2260ea",
-						backgroundColor: "#00000000"
+						data: rotData,
+						borderColor: rotationLineColor,
+						backgroundColor: backgroundColor,
 					}
 				],
 			},
@@ -379,8 +429,8 @@ $(() => {
 				scales: {
 					yAxes: [{
 						ticks: {
-							suggestedMax: 28,
-							suggestedMin: 10,
+							suggestedMax: 28, // todo ここを動的に変更する
+							suggestedMin: 10, // todo ここを動的に変更する
 							stepSize: 4,  // 縦メモリのステップ数
 							callback: function(value, index, values){
 								return  value +  '回転'  // 各メモリのステップごとの表記（valueは各ステップの値）
@@ -463,9 +513,33 @@ $(() => {
 			tmpDate.setDate(tmpDate.getDate() + (i + 1));
 			date = formatDate(tmpDate);
 		}
+
+		// 選択されているものが、リストに含まれていなければ初期化する -> ok
+		let found = null;
+		if(_selectedRotationRate) {
+			const sr = _selectedRotationRate;
+			found = rList.find(r => sr && r.date === sr.date && r.shopId === sr.shopId && r.gameNumber === sr.gameNumber);
+		} 
+		if(!found) {
+			if(rList.length) {
+				const last = rList[rList.length - 1];
+				_selectedRotationRate = {
+					date: last.date,
+					shopId: last.shopId,
+					gameNumber: last.gameNumber,
+				};				
+			} else {
+				_selectedRotationRate = null;
+			}
+		}
+		// 日付と店舗と台番号と機種で一致を調べる -> ok
 		rList.forEach(r => {
-			//if(r.array.length === 0) { return; }
-			rhtml += '<tr>';
+			const sr = _selectedRotationRate;
+			if(sr && r.date === sr.date && r.shopId === sr.shopId && r.gameNumber === sr.gameNumber) {
+				rhtml += `<tr class="selected-rotation-rate" data-value="${r.date + ';' + r.shopId + ';' + r.gameNumber}">`;				
+			} else {
+				rhtml += `<tr data-value="${r.date + ';' + r.shopId + ';' + r.gameNumber}">`;
+			}
 			rhtml += `<td>${r.date.substring(5)}</td>`;
 			rhtml += `<td>${r.shopName}</td>`;
 			rhtml += `<td>${r.gameNumber}</td>`;
@@ -483,6 +557,8 @@ $(() => {
 			rhtml += `<td>${r.round === 0 ? '--' : r.over + '/' + r.round + ': ' + (r.over/r.round * 100).toFixed(2)+'%'}</td>`;
 			rhtml += '</tr>';
 		});
+
+		
 		$('#rotation-rate-tbody').html(rhtml);
 	}
 
@@ -566,11 +642,28 @@ $(() => {
 		return rateHtml;
 	}
 
+	function clickRotationTr(e) {
+		const value = e.currentTarget.dataset.value;
+		const splits = value.split(';');
+		console.log(splits);
+		_selectedRotationRate = {
+			date: splits[0],
+			shopId: splits[1],
+			gameNumber: Number(splits[2]),
+		};
+		updateList();
+	}
+
 	function attachEvents() {
 
 		// ダブルタップでブラウザが拡大するのを防ぐ
 		document.addEventListener("dblclick", e => { 
 			e.preventDefault(); }, { passive: false });
+
+		// 回転率テーブルクリック時の処理
+		$('#rotation-rate-tbody').on('click', 'tr', function(e) {
+			clickRotationTr(e);
+		});
 
 		$('#to-main-button').click(e => {
 			$('#main-page').show();
