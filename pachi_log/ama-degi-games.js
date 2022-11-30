@@ -44,6 +44,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'shinfo2-ama',
+		shortName: 'シンフォ2 77',
+		name: '戦姫絶唱シンフォギア2 77Ver',
+		border: 16.0,
+		info: '大当り確率: 1/77.7, ST突入率: 51%, ST継続率: 79%',
+		yuTime: false,
+	},		
+	{
 		id: 'eva-premium-ama',
 		shortName: 'エヴァ決戦甘',
 		name: '新世紀エヴァンゲリオン決戦プレミアムモデル',
