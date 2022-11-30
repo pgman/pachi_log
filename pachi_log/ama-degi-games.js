@@ -21,7 +21,15 @@ const AMA_DEGI_GAMES = [
 		shortName: 'らんま甘',
 		name: 'Pらんま1/2 熱血格闘遊戯 99Ver.',
 		border: 18.0,
-		info: '大当り確率: 1/99.9, ST突入率: 100%, ST継続率(2回目以降): 80%, 平均連荘: 8.2',
+		info: '大当り確率: 1/99.9, ST突入率: 100%, ST継続率(2回目以降): 90%, 平均連荘: 8.2',
+		yuTime: false,
+	},		
+	{
+		id: 'shinkagetsu2-ama',
+		shortName: '真花月2 - 99',
+		name: 'PAF真花月2 Light Ver. ',
+		border: 16.6,
+		info: '大当り確率: 1/99.9, ST突入率: 100%',
 		yuTime: false,
 	},		
 	{
