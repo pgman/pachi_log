@@ -28,8 +28,8 @@ const AMA_DEGI_GAMES = [
 		id: 'shinkagetsu2-ama',
 		shortName: '真花月2 - 99',
 		name: 'PAF真花月2 Light Ver. ',
-		border: 16.6,
-		info: '大当り確率: 1/99.9, ST突入率: 100%',
+		border: 15.0,
+		info: '大当り確率: 1/99.9, ST突入率: 100%<br>mattunnではボーダー16.6だが、残210を考慮すると、ボーダー15.0ぐらい',
 		yuTime: false,
 	},		
 	{
