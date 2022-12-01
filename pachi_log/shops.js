@@ -54,6 +54,12 @@ const SHOPS = [
 		info: '無し',
 	},		
 	{
+		id: 'magic-bird-2',
+		name: 'マジックバード2',
+		shortName: 'マジックバード2',
+		info: '無し',
+	},		
+	{
 		id: 'kicona-ama',
 		name: 'キコーナ尼崎',
 		shortName: 'キコーナ尼崎本店',
