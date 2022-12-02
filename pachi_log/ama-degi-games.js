@@ -60,6 +60,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'donaiyanen-ama',
+		shortName: 'どない',
+		name: 'Pどないやねん',
+		border: 17.9,
+		info: '大当り確率: 1/39.9, ST突入率: 10%, ST継続率: 90%',
+		yuTime: false,
+	},		
+	{
 		id: 'eva-premium-ama',
 		shortName: 'エヴァ決戦甘',
 		name: '新世紀エヴァンゲリオン決戦プレミアムモデル',
