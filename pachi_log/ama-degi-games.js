@@ -76,6 +76,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'shiokinin-ama',
+		shortName: '仕置人甘',
+		name: '必殺仕置人 TURBO',
+		border: 17.8,
+		info: '大当り確率: 1/128.0, ST突入率: 35%, ST継続率: 80%<br>ボーダーに関しては平打ちなら16切るらしい',
+		yuTime: false,
+	},		
+	{
 		id: 'aimarin99',
 		shortName: 'アイマリン99',
 		name: 'PAスーパー海物語 IN 沖縄5 with アイマリン',
