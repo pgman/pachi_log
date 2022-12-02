@@ -80,7 +80,15 @@ const AMA_DEGI_GAMES = [
 		shortName: '仕置人甘',
 		name: '必殺仕置人 TURBO',
 		border: 17.8,
-		info: '大当り確率: 1/128.0, ST突入率: 35%, ST継続率: 80%<br>ボーダーに関しては平打ちなら16切るらしい',
+		info: '大当り確率: 1/99.0, ST突入率: 35%, ST継続率: 80%<br>ボーダーに関しては平打ちなら16切るらしい',
+		yuTime: false,
+	},		
+	{
+		id: 'abudeka-ama',
+		shortName: 'あぶデカ甘',
+		name: 'Pあぶない刑事 129ver.',
+		border: 18.6,
+		info: '大当り確率: 1/129.7, ST突入率: 36.5%, ST継続率: 80%',
 		yuTime: false,
 	},		
 	{
@@ -122,6 +130,22 @@ const AMA_DEGI_GAMES = [
 		border: 16.5,
 		info: `大当り確率: 1/141.1, ST突入率: 40%, <br>
 		おしりペンペンタイムBONUS: 継続率: 約91%, <br>BATTLE MODE勝率: 約65%`,
+		yuTime: false,
+	},		
+	{
+		id: 'yasei-ama',
+		shortName: '野生甘',
+		name: 'PA野生の王国 GO 99Ver',
+		border: 17.9,
+		info: '大当り確率: 1/99.9, ST突入率: 100%, 継続率: 70%',
+		yuTime: false,
+	},		
+	{
+		id: 'yasei-dram-ama',
+		shortName: '野生どらむ甘',
+		name: 'PA野生の王国どらむサファリN-K1 YT299 甘デジ',
+		border: 17.9,
+		info: '大当り確率: 1/99.9, ST突入率: 50%, 継続率: 75%<br>ST+時短50の時は75%継続、時短70回の時は52.5%継続',
 		yuTime: false,
 	},		
 	{
