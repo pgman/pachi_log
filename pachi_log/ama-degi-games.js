@@ -68,6 +68,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'golgo-ama',
+		shortName: 'ゴルゴ甘',
+		name: 'Pフィーバーゴルゴ13 Light ver.',
+		border: 19.5,
+		info: '大当り確率: 1/128.0, ST突入率: 50%, ST継続率: 65%',
+		yuTime: false,
+	},		
+	{
 		id: 'aimarin99',
 		shortName: 'アイマリン99',
 		name: 'PAスーパー海物語 IN 沖縄5 with アイマリン',
