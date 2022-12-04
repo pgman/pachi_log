@@ -187,7 +187,7 @@ $(() => {
 	}
 
 	function updateList() {
-		$('#shop-select').val(_inputShopId);
+		$('#shop-select, #rotation-rate-shop-select').val(_inputShopId);
 		$('#game-select').val(_inputGameId);
 
 		const shop = getShopById(_inputShopId);
@@ -977,6 +977,10 @@ $(() => {
 				d.overs = [];
 			}
 		});
+
+		if(_data.length) {
+			_inputShopId = _data[_data.length - 1].shopId;
+		}
 	}
 
 	init();
