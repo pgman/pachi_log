@@ -20,7 +20,7 @@ const AMA_DEGI_GAMES = [
 		id: 'genidatenlight',
 		shortName: 'P源さんLIGHT',
 		name: 'P大工の源さん超韋駄天LIGHT',
-		border: 20.0,
+		border: 19.2,
 		info: '大当り確率: 1/129.51, 超源RUSH突入率: 50.1%',
 		yuTime: false,
 	},
