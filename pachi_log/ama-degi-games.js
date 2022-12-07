@@ -17,6 +17,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: true,
 	},			
 	{
+		id: 'genidatenlight',
+		shortName: 'P源さんLIGHT',
+		name: 'P大工の源さん超韋駄天LIGHT',
+		border: 20.0,
+		info: '大当り確率: 1/129.51, 超源RUSH突入率: 50.1%',
+		yuTime: false,
+	},
+	{
 		id: 'ranma-ama',
 		shortName: 'らんま甘',
 		name: 'Pらんま1/2 熱血格闘遊戯 99Ver.',
@@ -291,14 +299,6 @@ const AMA_DEGI_GAMES = [
 		border: 17.9,
 		info: '大当り確率: 1/99.9, 戦RUSH突入率: 44.5%',
 		yuTime: true,
-	},
-	{
-		id: 'genidatenlight',
-		shortName: 'P源さんLIGHT',
-		name: 'P大工の源さん超韋駄天LIGHT',
-		border: 20.0,
-		info: '大当り確率: 1/129.51, 超源RUSH突入率: 50.1%',
-		yuTime: false,
 	},
 	{
 		id: 'umi-ama',
