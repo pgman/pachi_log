@@ -692,7 +692,11 @@ $(() => {
 			updateList();
 		});
 
-		$('#rotation-rate-start-date, #rotation-rate-end-date, #rotation-rate-shop-select').change(updateList);
+		$('#rotation-rate-start-date, #rotation-rate-end-date').change(updateList);
+		$('#rotation-rate-shop-select').change(() => {
+			_inputShopId = $('#rotation-rate-shop-select').val();
+			updateList(); 
+		});
 		$('#rotation-rate-button').click(updateList);
 
 		$('body').on('click', '.edit-data', e => {
