@@ -94,8 +94,8 @@ const LIGHT_MIDDLE_GAMES = [
 		id: 'shikkoku199',
 		shortName: '慶次漆黒199',
 		name: 'P真・花の慶次2 漆黒の衝撃 EXTRA RUSH',
-		border: 15.7,
-		info: '大当り確率: 1/199.8, RUSH突入率: 37%<br>RUSH継続率: 81%',
+		border: 15.9,
+		info: '大当り確率: 1/199.8, RUSH突入率: 37%<br>RUSH継続率: 81%<br>フル介入RB144で15.1',
 		yuTime: false,
 	},	
 	{
