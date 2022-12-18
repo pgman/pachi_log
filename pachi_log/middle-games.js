@@ -49,6 +49,14 @@ const MIDDLE_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'keiji3',
+		shortName: '慶次3',
+		name: 'P真・花の慶次3',
+		border: 16.3,
+		info: '大当り確率: 1/319.69, ST突入率(トータル): 67%, 突入率(ヘソ入賞時): 55%, ST継続率: 83.3%',
+		yuTime: false,
+	},
+	{
 		id: 'umichosenpu319',
 		shortName: '海超旋風319',
 		name: 'Pスーパー海物語 IN 沖縄5 夜桜超旋風',
