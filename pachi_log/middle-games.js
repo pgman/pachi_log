@@ -15,7 +15,15 @@ const MIDDLE_GAMES = [
 		border: 18.5,
 		info: '大当り確率: 1/319.69, ST突入率: 52%, <br>ボーダー:18.5',
 		yuTime: false,
-	},		
+	},
+	{
+		id: 'gozieva',
+		shortName: 'ゴジエヴァ',
+		name: 'Pゴジラ対エヴァンゲリオン G細胞覚醒',
+		border: 17.1,
+		info: '大当り確率: 1/319.7, ST突入率: 50.5%, ST継続率: 約81%',
+		yuTime: false,
+	},			
 	{
 		id: 'eva15',
 		shortName: 'エヴァ15',
