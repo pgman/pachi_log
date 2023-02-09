@@ -1,6 +1,14 @@
 // ミドル
 const MIDDLE_GAMES = [		
 	{
+		id: 'oumi5',
+		shortName: '大海5',
+		name: 'P大海物語5',
+		border: 16.7,
+		info: '大当り確率: 1/319.69, ST突入率: 60%, 継続率71.5%',
+		yuTime: false,
+	},
+	{
 		id: 'pokinawa5',
 		shortName: '沖海5',
 		name: 'Pスーパー海物語 IN 沖縄5',

@@ -15,6 +15,22 @@ const AMA_DEGI_GAMES = [
 		border: 16.8,
 		info: '大当り確率: 1/99.9, ST突入率: 42%, ST継続率: 80%, <br>15回回れば、天井まで200で期待値プラス',
 		yuTime: true,
+	},		
+	{
+		id: 'chosenpuama',
+		shortName: '超旋風甘',
+		name: 'PAスーパー海物語 IN 沖縄5 夜桜超旋風 99ver. ',
+		border: 19.2,
+		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 90%',
+		yuTime: true,
+	},		
+	{
+		id: 'bakabonama',
+		shortName: 'バカボン甘',
+		name: 'P神・天才バカボン〜甘神SPEC〜',
+		border: 16.3,
+		info: '大当り確率: 1/129.77, ST突入率: 72%',
+		yuTime: true,
 	},			
 	{
 		id: 'genidatenlight',
