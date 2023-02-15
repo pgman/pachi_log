@@ -46,11 +46,17 @@ const SHOPS = [
 		name: 'マルハン梅田店',
 		shortName: 'マル梅田',
 		info: '無し',
-	},		
+	},
+	{
+		id: 'superhall',
+		name: 'スーパーホール',
+		shortName: 'スパホ',
+		info: '無し',
+	},				
 	{
 		id: 'tennoujihall',
 		name: '天王寺ホール',
-		shortName: '天王寺ホール',
+		shortName: '天ホ',
 		info: '無し',
 	},		
 	{

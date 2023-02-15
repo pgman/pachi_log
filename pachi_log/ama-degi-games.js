@@ -25,6 +25,14 @@ const AMA_DEGI_GAMES = [
 		yuTime: true,
 	},		
 	{
+		id: 'yamato2022ama',
+		shortName: 'ヤマト2022甘',
+		name: 'P宇宙戦艦ヤマト2202 -ONLY ONE- LIGHT Ver.',
+		border: 16.9,
+		info: '大当り確率: 1/89.9, ST突入率: 51%, ST継続率: 91%',
+		yuTime: true,
+	},		
+	{
 		id: 'bakabonama',
 		shortName: 'バカボン甘',
 		name: 'P神・天才バカボン〜甘神SPEC〜',
