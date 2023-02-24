@@ -31,7 +31,15 @@ const MIDDLE_GAMES = [
 		border: 17.1,
 		info: '大当り確率: 1/319.7, ST突入率: 100%, ST継続率: 約81%',
 		yuTime: false,
-	},			
+	},		
+	{
+		id: 'ring-noroi-319',
+		shortName: 'リング呪319',
+		name: 'Pリング呪いの7日間2',
+		border: 17.7,
+		info: '大当り確率: 1/319.7, ST突入率: 100%, ST継続率: 約78%',
+		yuTime: false,
+	},		
 	{
 		id: 'gozieva',
 		shortName: 'ゴジエヴァ',

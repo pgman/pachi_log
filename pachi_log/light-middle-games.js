@@ -27,6 +27,22 @@ const LIGHT_MIDDLE_GAMES = [
 		yuTime: false,
 	},	
 	{
+		id: 'yamato199',
+		shortName: 'ヤマト199',
+		name: 'P宇宙戦艦ヤマト2202 -ONLY ONE-',
+		border: 17.2,
+		info: '大当り確率: 1/199.8, ST突入率: 60%, ST継続率: 約93%<br>金ヤマトRUSH継続率: 78%',
+		yuTime: false,
+	},	
+	{
+		id: 'ring-noroi-199',
+		shortName: 'リング呪199',
+		name: 'Pリング呪いの7日間2 ライトミドル',
+		border: 17.7,
+		info: '大当り確率: 1/199.8, ST突入率: 100%, ST継続率: 約70%',
+		yuTime: false,
+	},	
+	{
 		id: 'shinfogia3',
 		shortName: 'シンフォ3',
 		name: 'Pフィーバー戦姫絶唱シンフォギア3黄金絶唱',
@@ -56,14 +72,6 @@ const LIGHT_MIDDLE_GAMES = [
 		name: 'P一球魂GOLDピラミッ伝',
 		border: 18.3,
 		info: '大当り確率: 1/179.5, ST突入率: 50.5%, ST継続率: 約75.2%',
-		yuTime: false,
-	},	
-	{
-		id: 'yamato199',
-		shortName: 'ヤマト199',
-		name: 'P宇宙戦艦ヤマト2202 -ONLY ONE-',
-		border: 17.2,
-		info: '大当り確率: 1/199.8, ST突入率: 60%, ST継続率: 約93%<br>金ヤマトRUSH継続率: 78%',
 		yuTime: false,
 	},	
 	{
