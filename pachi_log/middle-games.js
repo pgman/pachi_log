@@ -25,6 +25,14 @@ const MIDDLE_GAMES = [
 		yuTime: false,
 	},
 	{
+		id: 'dunbell',
+		shortName: 'ダンベル',
+		name: 'Pフィーバーダンベル何キロ持てる？',
+		border: 17.1,
+		info: '大当り確率: 1/319.7, ST突入率: 100%, ST継続率: 約81%',
+		yuTime: false,
+	},			
+	{
 		id: 'gozieva',
 		shortName: 'ゴジエヴァ',
 		name: 'Pゴジラ対エヴァンゲリオン G細胞覚醒',
