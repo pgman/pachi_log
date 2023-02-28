@@ -33,7 +33,7 @@ const MIDDLE_GAMES = [
 		yuTime: false,
 	},		
 	{
-		id: 'senven2',
+		id: 'seven2',
 		shortName: '大罪',
 		name: 'P七つの大罪2',
 		border: 17.4,
