@@ -33,6 +33,14 @@ const MIDDLE_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'senven2',
+		shortName: '大罪',
+		name: 'P七つの大罪2',
+		border: 17.4,
+		info: '大当り確率: 1/319.7, ST突入率: 77.7%, ST継続率: 77%',
+		yuTime: false,
+	},		
+	{
 		id: 'ring-noroi-319',
 		shortName: 'リング呪319',
 		name: 'Pリング呪いの7日間2',
