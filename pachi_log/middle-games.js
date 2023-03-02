@@ -33,6 +33,22 @@ const MIDDLE_GAMES = [
 		yuTime: false,
 	},		
 	{
+		id: 'hokutomuso4',
+		shortName: '北斗無双4',
+		name: 'P真・北斗無双 第4章',
+		border: 17.2,
+		info: '大当り確率: 1/319.7, ST突入率: 65%, ST継続率: 76%',
+		yuTime: false,
+	},		
+	{
+		id: 'hokutomuso-re-319',
+		shortName: '北斗無双Re',
+		name: 'P真・北斗無双 Re：319ver.',
+		border: 16.8,
+		info: '大当り確率: 1/319.7, ST突入率: 63.9%, ST継続率: 84.1%',
+		yuTime: false,
+	},		
+	{
 		id: 'seven2',
 		shortName: '大罪',
 		name: 'P七つの大罪2',
