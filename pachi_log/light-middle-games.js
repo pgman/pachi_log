@@ -35,6 +35,14 @@ const LIGHT_MIDDLE_GAMES = [
 		yuTime: false,
 	},	
 	{
+		id: 'kinsan199',
+		shortName: '金さん199',
+		name: 'P新・遠山の金さん',
+		border: 16.8,
+		info: '大当り確率: 1/199.8, ST突入率: 100%, ST継続率: 約75%',
+		yuTime: false,
+	},	
+	{
 		id: 'ring-noroi-199',
 		shortName: 'リング呪199',
 		name: 'Pリング呪いの7日間2 ライトミドル',
