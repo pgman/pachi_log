@@ -236,7 +236,7 @@ const MIDDLE_GAMES = [
 		id: 'hokutomuso3',
 		shortName: '北斗無双3',
 		name: 'P真・北斗無双 第3章',
-		border: 18.9,
+		border: 18.5,
 		info: '大当り確率: 1/319.7, ST突入率: 56.9%, ST継続率: 90%',
 		yuTime: true,
 	},
