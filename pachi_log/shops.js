@@ -60,6 +60,18 @@ const SHOPS = [
 		info: '無し',
 	},		
 	{
+		id: 'hyper-arrow-fukai',
+		name: 'ハイア深井',
+		shortName: 'ハイパーアロー深井',
+		info: '無し',
+	},		
+	{
+		id: 'arrow-fukai',
+		name: 'アロー深井',
+		shortName: 'アロー深井',
+		info: '無し',
+	},		
+	{
 		id: 'magic-bird-2',
 		name: 'マジックバード2',
 		shortName: 'マジックバード2',
