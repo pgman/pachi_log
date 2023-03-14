@@ -38,7 +38,7 @@ const AMA_DEGI_GAMES = [
 		name: 'モンキーターンV甘デジ GC250A',
 		border: 16.9,
 		info: '大当り確率: 1/99.9, ST突入率: 51%, ST継続率: 約80%',
-		yuTime: true,
+		yuTime: false,
 	},			
 	{
 		id: 'mezon-ama',
@@ -46,7 +46,15 @@ const AMA_DEGI_GAMES = [
 		name: 'Pめぞん一刻~Wedding Story~ 甘デジ',
 		border: 16.9,
 		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 76.8%',
-		yuTime: true,
+		yuTime: false,
+	},			
+	{
+		id: 'pantsu-gen-ama',
+		shortName: 'パンツ源甘',
+		name: 'Pストライクウィッチーズ2 129ver.',
+		border: 18.9,
+		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 90%',
+		yuTime: false,
 	},			
 	{
 		id: 'bakabonama',
