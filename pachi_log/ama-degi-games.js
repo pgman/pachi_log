@@ -63,7 +63,15 @@ const AMA_DEGI_GAMES = [
 		border: 18.9,
 		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 90%',
 		yuTime: false,
-	},			
+	},		
+	{
+		id: 'momokyun-sengeki-ama',
+		shortName: 'モモキュン閃撃甘',
+		name: 'Pモモキュンソード閃撃GCA',
+		border: 16.3,
+		info: '大当り確率: 1/99.0, 戦RUSH突入率: 45.2%, 継続率: 90%',
+		yuTime: true,
+	},	
 	{
 		id: 'bakabonama',
 		shortName: 'バカボン甘',
