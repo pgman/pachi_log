@@ -47,6 +47,14 @@ const AMA_DEGI_GAMES = [
 		border: 16.9,
 		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 76.8%',
 		yuTime: false,
+	},		
+	{
+		id: 'majan-77-ama',
+		shortName: '麻雀4甘',
+		name: 'P麻雀物語4 77ver.',
+		border: 18.4,
+		info: '大当り確率: 1/77.7, ST突入率: 37%, ST継続率: 85%',
+		yuTime: false,
 	},			
 	{
 		id: 'pantsu-gen-ama',
