@@ -61,8 +61,8 @@ const SHOPS = [
 	},		
 	{
 		id: 'hyper-arrow-fukai',
-		name: 'ハイア深井',
-		shortName: 'ハイパーアロー深井',
+		name: 'ハイパーアロー深井',
+		shortName: 'ハイア深井',
 		info: '無し',
 	},		
 	{
