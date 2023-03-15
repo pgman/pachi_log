@@ -264,7 +264,7 @@ const AMA_DEGI_GAMES = [
 		id: 'ginpara99',
 		shortName: 'ギンパラ99',
 		name: 'PAギンギラパラダイス 夢幻カーニバル 強99ver.',
-		border: 17.0s,
+		border: 17.0,
 		info: '大当り確率: 1/99.9, RUSH突入率: 41%<br>RUSH継続率: 77%',
 		yuTime: false,
 	},	
