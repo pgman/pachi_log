@@ -37,7 +37,7 @@ const LIGHT_MIDDLE_GAMES = [
     {
 		id: 'splash-splash',
 		shortName: 'スプスプ',
-		name: 'Pフィーバースプラッシュ×スプラッシュ',
+		name: 'Pフィーバースプラッシュxスプラッシュ',
 		border: 19.6,
 		info: '大当り確率: 1/199.8, ST突入率: 50%, ST継続率: 90%',
 		yuTime: false,
