@@ -73,14 +73,6 @@ const LIGHT_MIDDLE_GAMES = [
 		border: 16.8,
 		info: '大当り確率: 1/199.8, ST突入率: 63%, ST継続率: 82%',
 		yuTime: false,
-	},		
-	{
-		id: 'koumonkamimori2',
-		shortName: '黄門神盛2',
-		name: 'P黄門ちゃま 神盛2',
-		border: 18.0,
-		info: '大当り確率: 1/199.8, ST突入率: 58%, ST継続率: 72%',
-		yuTime: false,
 	},	
 	{
 		id: 'darumash2',
