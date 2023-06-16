@@ -194,15 +194,7 @@ const AMA_DEGI_GAMES = [
 		border: 17.8,
 		info: '大当り確率: 1/99.0, ST突入率: 35%, ST継続率: 80%<br>ボーダーに関しては平打ちなら16切るらしい',
 		yuTime: false,
-	},		
-	{
-		id: 'abudeka-ama',
-		shortName: 'あぶデカ甘',
-		name: 'Pあぶない刑事 129ver.',
-		border: 18.6,
-		info: '大当り確率: 1/129.7, ST突入率: 36.5%, ST継続率: 80%',
-		yuTime: false,
-	},		
+	},	
 	{
 		id: 'aimarin99',
 		shortName: 'アイマリン99',
@@ -219,31 +211,6 @@ const AMA_DEGI_GAMES = [
 		info: '大当り確率: 1/99.9, ST突入率: 100%<br>ST中大当り発生率: 41%, 時短引き戻し率: 14-59%<br>1R101.6ならボーダー17.5',
 		yuTime: false,
 	},	
-	{
-		id: 'inuyasya2',
-		shortName: '犬夜叉2',
-		name: 'P犬夜叉2',
-		border: 16.8,
-		info: '大当り確率: 1/99.9, 最終決戦成功率: 約28%, ST継続率: 79%, 最終決戦成功率約28%で算出',
-		yuTime: false,
-	},		
-	{
-		id: 'kinnikuman3meat',
-		shortName: 'キン肉マン3ミート',
-		name: 'ぱちんこキン肉マン3 キン肉星王位争奪編 特盛ミートくんver. ',
-		border: 17.2,
-		info: '大当り確率: 1/99.9, ST突入率: 50%, ST継続率: 90% or 95%',
-		yuTime: false,
-	},		
-	{
-		id: 'cinderella',
-		shortName: 'シンブレ',
-		name: 'Pシンデレラブレイド',
-		border: 16.5,
-		info: `大当り確率: 1/141.1, ST突入率: 40%, <br>
-		おしりペンペンタイムBONUS: 継続率: 約91%, <br>BATTLE MODE勝率: 約65%`,
-		yuTime: false,
-	},		
 	{
 		id: 'yasei-ama',
 		shortName: '野生甘',
@@ -341,14 +308,6 @@ const AMA_DEGI_GAMES = [
 		yuTime: true,
 	},
 	{
-		id: 'koumonnama',
-		shortName: 'P黄門ちゃま甘',
-		name: 'P真・黄門ちゃま 甘デジ',
-		border: 18.0,
-		info: '大当り確率: 1/99.9→1/59.5, 時短50回, ST100回',
-		yuTime: true,
-	},
-	{
 		id: 'akb',
 		shortName: 'P AKB甘',
 		name: 'ぱちんこ AKB48 桜 LIGHT ver.',
@@ -363,14 +322,6 @@ const AMA_DEGI_GAMES = [
 		border: 21.2,
 		info: '大当り確率: 1/99.9, ST突入率: 58%, ST継続率: 60%, <br>STにもれたら時短30回',
 		yuTime: false,
-	},
-	{
-		id: 'goonlight',
-		shortName: 'Pライダー甘',
-		name: 'ぱちんこ仮面ライダー GO-ON LIGHT',
-		border: 15.4,
-		info: '大当り確率: 1/99.9',
-		yuTime: true,
 	},
 	{
 		id: 'momokyunlight',
